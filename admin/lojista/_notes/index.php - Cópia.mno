@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_RsUsuarios" value="name:id;datatype:int,name:nome;datatype:string,name:email;datatype:string,name:datanascimento;datatype:string,name:senha;datatype:string,name:celular;datatype:string,name:sexo;datatype:string,name:estatos;datatype:string,name:img;datatype:string" />
+	<infoitem key="UD_RsOfertas" value="name:id;datatype:int,name:titulo;datatype:string,name:tipo;datatype:string,name:descricao;datatype:blob,name:qunatidade;datatype:int,name:valor;datatype:string,name:img;datatype:string,name:video;datatype:string,name:destaque;datatype:string,name:id_lojista;datatype:int,name:datacadastro;datatype:timestamp" />
+	<infoitem key="UD_RsLojistas" value="name:id;datatype:int,name:nome-empresa;datatype:string,name:nome-responsavel;datatype:string,name:email;datatype:string,name:senha;datatype:string,name:endereco;datatype:string,name:bairro;datatype:string,name:cidade;datatype:int,name:cep;datatype:string,name:cpf-cnpj;datatype:string,name:tipo-lojista;datatype:string,name:telefone;datatype:string,name:celular;datatype:string,name:img;datatype:string,name:nome-fantasia;datatype:string" />
+	<infoitem key="UD_RsBusca" value="name:id;datatype:int,name:busca;datatype:blob,name:veses;datatype:int,name:data;datatype:timestamp" />
+</info>

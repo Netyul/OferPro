@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_administradores" value="name:id;datatype:int,name:nome;datatype:string,name:sobrenome;datatype:string,name:email;datatype:string,name:login;datatype:string,name:senha;datatype:string,name:cnpj-cpf;datatype:string,name:statos;datatype:string,name:telefone;datatype:string,name:celular;datatype:string,name:cidade;datatype:int,name:estado;datatype:int,name:level;datatype:string" />
+	<infoitem key="UD_cidade" value="name:id;datatype:int,name:nome;datatype:string,name:id_uf;datatype:int" />
+</info>

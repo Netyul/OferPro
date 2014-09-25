@@ -1,0 +1,44 @@
+<!-- Arquivo main -->
+<?php 
+/* 
+ * Oferapp < http://www.netyul.com.br/ >.
+ * Autor: Jefte Amorim da Costa
+ * aquivo que contem as funções de urlamigavel mais ultilizadas no sistema Oferapp.
+ * versão 1.0
+ */		
+	
+		
+			
+			$action = isset($urlAmigavel[1]) ? $urlAmigavel[1] : '';
+			$subaction =isset($urlAmigavel[2]) ? $urlAmigavel[2] : '';
+		
+		
+		$paginas = array('contato','busca', 'negocios', 'usuario', 'cadastro', 'ofertas', 'tabloides','sorteios','logout', 'acessorestrito','login');
+		//comparar com banco de dados
+		
+		$query_perfil = "";
+		
+		if(isset($pagina) && isset($catCidade) && $pagina == $catCidade){
+				require_once('paginas/cidade.php');
+			}
+		//paginas home
+		elseif(!isset($pagina) || $pagina ==''){
+			require_once('paginas/home.php');
+		}
+		//paginas fixas
+		elseif(isset($pagina) && in_array($pagina, $paginas)){
+			require_once('paginas/'. $pagina .'.php');
+		}
+		//paginas de ação final
+		elseif(isset($acao) && $acao !=''){
+			require_once('paginas/action.php');
+		}
+		//pagina de categorias
+		elseif(isset($pagina) && !in_array($pagina, $paginas) && $pagina != $catCidade){
+			require_once('paginas/categorias.php');
+		}
+		//pagina de erro
+		else{
+			require_once('paginas/erro-404.php');
+		}
+?>

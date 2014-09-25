@@ -1,0 +1,65 @@
+<!-- Aquivo section -->
+<?php
+/* 
+ * Oferapp < http://www.netyul.com.br/ >.
+ * Autor: Jefte Amorim da Costa
+ * aquivo que contem o conteudo da section do sistema Oferapp.
+ */
+
+
+if(!isset($pagina) || $pagina ==''){
+?>
+<section class="oa-principal">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-md-8">
+            	<div class="Slogan">
+					<h1 class="lead">As ofertas mais pr&oacute;ximas em suas m&atilde;os</h1>
+                    
+        		</div>
+            </div>
+            <div class="col-md-4">
+            	<div class="img-section">
+                	<p><a class="btn btn-primary btn-lg" href="#">Baixar App!</a></p>
+                </div>
+            </div>
+        </div>
+    	
+	</div>
+</section> 
+<?php
+}
+else{
+?>
+<section>
+	<div class="container">
+    
+        <ol class="breadcrumb">
+            <li><a href="http://<?php echo BASEURL; ?>">Home</a></li>
+            <?php
+                if(isset($pagina)){
+                    if($action ==''){
+                            
+            ?>
+                        <li <?php echo 'class="active"';?>><?php echo $pagina; ?></li>
+            <?php 
+                    }
+                    else{
+            ?>
+                        <li><a href="<?php baseurl($pagina);?>"><?php echo $pagina; ?></a></li>
+            <?php
+                    }
+                }
+                if(isset($action) && $action !=''){
+            ?>
+            <li class="active"><?php echo $action; ?></li>
+            <?php
+                }
+            ?>
+        </ol>
+    
+    </div>
+</section>
+<?php 
+}
+?>

@@ -1,0 +1,56 @@
+<?php
+/*
+* OferApp < http://www.netyul.com.br >
+* Autor: Jefte Amorim da Costa
+* Design:
+* Arquivo
+* Versão: 1.0
+*/
+
+if(isset($_SESSION['user_id'])){
+	
+
+?>
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <div class="btn-group btn-group-cidade" role="menuitem">
+            <span class="btn btn-default">Cidade: </span>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu" >
+                <li><a href="http://<?php echo BASEURL; ?>">OferApp - Home</a></li>
+                <li class="divider"></li>
+				<?php 
+					while($row_cidade = mysqli_fetch_array($Result_cidade)){
+						$cat_cidade = $row_cidade['nome'].'-'.$row_cidade['sigla'];
+                ?>
+                <li><a href="<?php baseurl($cat_cidade);?>"><?php echo $cat_cidade; ?></a></li>
+                <?php 
+					if($pagina == $cat_cidade){
+						$catCidade = $cat_cidade;
+				
+					}
+				} 
+				?>
+            </ul>
+        </div>    
+    </li>
+    
+    <li><a href="<?php baseurl('contato');?>"><span class="glyphicon glyphicon-bell"></span><span class="badge">1</span></a></li>
+    <li class="dropdown ">
+        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo $userRow['nome'];?><span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="<?php baseurl('usuario/perfil');?>">Editar perfil</a></li>
+            <li><a href="<?php baseurl('usuario/configurar-acesso');?>" class="loginUser">Configurações de Acesso</a></li>
+            <li><a href="<?php baseurl('usuario/notificar');?>">Notificações</a></li>
+            <li><a href="<?php baseurl('usuario/minhas-ofertas');?>">minhas Ofertas</a></li>
+          <li><a href="<?php baseurl('usuario/meus-sorteios');?>">meus Sorteios</a></li>
+            <li class="divider"></li>
+            <li><a href="<?php baseurl('usuario');?>" >perfil</a></li>
+            <li><a href="<?php baseurl('logout');?>"  >sair</a></li>
+        </ul>
+    </li>
+</ul>
+<?php }else{} ?>

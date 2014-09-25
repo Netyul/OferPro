@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_presentes" value="name:id;datatype:int,name:titulo;datatype:string,name:descricao;datatype:blob,name:img;datatype:string,name:id_lojista;datatype:int,name:datatermino;datatype:string,name:datacadastro;datatype:timestamp" />
+	<infoitem key="UD_Recordset1" value="name:idg;datatype:int,name:cliks;datatype:int,name:datacadidatura;datatype:timestamp,name:iduser;datatype:int,name:nome;datatype:string,name:email;datatype:string,name:sexo;datatype:string,name:celular;datatype:string,name:datanascimento;datatype:string,name:img;datatype:string,name:idpre;datatype:int,name:id_lojista;datatype:int" />
+	<infoitem key="UD_ganhapresente" value="name:idg;datatype:int,name:cliks;datatype:int,name:datacadidatura;datatype:timestamp,name:iduser;datatype:int,name:nome;datatype:string,name:email;datatype:string,name:sexo;datatype:string,name:celular;datatype:string,name:datanascimento;datatype:string,name:img;datatype:string,name:idpre;datatype:int,name:id_lojista;datatype:int" />
+</info>

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_Presenteseditar" value="name:id;datatype:int,name:titulo;datatype:string,name:descricao;datatype:blob,name:img;datatype:string,name:id_lojista;datatype:int,name:datatermino;datatype:string,name:datacadastro;datatype:timestamp" />
+	<infoitem key="UD_presentes" value="name:id;datatype:int,name:titulo;datatype:string,name:descricao;datatype:blob,name:img;datatype:string,name:id_lojista;datatype:int,name:datatermino;datatype:string,name:datacadastro;datatype:timestamp" />
+</info>

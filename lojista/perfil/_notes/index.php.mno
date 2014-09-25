@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_lojista" value="name:id;datatype:int,name:nomeEmpresa;datatype:string,name:nomeResponsavel;datatype:string,name:email;datatype:string,name:endereco;datatype:string,name:bairro;datatype:string,name:nomeCidade;datatype:string,name:estado;datatype:string,name:sigla;datatype:string,name:cep;datatype:string,name:tipoLojista;datatype:string,name:telefone;datatype:string,name:celular;datatype:string,name:img;datatype:string" />
+</info>

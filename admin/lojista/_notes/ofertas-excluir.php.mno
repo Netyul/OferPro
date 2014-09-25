@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_excluirOferta" value="name:id;datatype:int,name:titulo;datatype:string,name:tipo;datatype:string,name:descricao;datatype:blob,name:quantidade;datatype:int,name:valor;datatype:real,name:img;datatype:string,name:video;datatype:string,name:destaque;datatype:string,name:visualizacoes;datatype:int,name:id_lojista;datatype:int,name:datacadastro;datatype:timestamp" />
+</info>

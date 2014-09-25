@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_ofertas" value="name:id;datatype:int,name:titulo;datatype:string,name:tipo;datatype:string,name:descricao;datatype:blob,name:quantidade;datatype:int,name:valor;datatype:real,name:img;datatype:string,name:video;datatype:string,name:destaque;datatype:string,name:visualizacoes;datatype:int,name:id_lojista;datatype:int,name:datacadastro;datatype:timestamp" />
+	<infoitem key="UD_tabloides" value="name:id;datatype:int,name:titulo;datatype:string,name:descricao;datatype:blob,name:img;datatype:string,name:destaque;datatype:string,name:datacadastro;datatype:timestamp,name:id_lojista;datatype:int" />
+	<infoitem key="UD_presentes" value="name:id;datatype:int,name:titulo;datatype:string,name:descricao;datatype:blob,name:img;datatype:string,name:id_lojista;datatype:int,name:datatermino;datatype:string,name:datacadastro;datatype:timestamp" />
+	<infoitem key="UD_Recordset1" value="name:id;datatype:int,name:busca;datatype:blob,name:veses;datatype:int,name:data;datatype:timestamp" />
+	<infoitem key="UD_solicitacoes" value="name:id;datatype:int,name:id_oferta;datatype:int,name:id_cliente;datatype:int,name:vendido;datatype:string,name:data;datatype:timestamp,name:id_lojista;datatype:int" />
+	<infoitem key="UD_vendidos" value="name:id;datatype:int,name:id_oferta;datatype:int,name:id_cliente;datatype:int,name:vendido;datatype:string,name:data;datatype:timestamp,name:id_lojista;datatype:int" />
+	<infoitem key="UD_buscas" value="name:id;datatype:int,name:busca;datatype:blob,name:veses;datatype:int,name:data;datatype:timestamp" />
+</info>

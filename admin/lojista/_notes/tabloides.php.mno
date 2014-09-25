@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_tabloide" value="name:id;datatype:int,name:titulo;datatype:string,name:tipo;datatype:string,name:descricao;datatype:blob,name:img;datatype:string,name:destaque;datatype:string,name:datacadastro;datatype:timestamp,name:id_lojista;datatype:int" />
+</info>

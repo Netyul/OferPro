@@ -1,0 +1,41 @@
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <div class="btn-group btn-group-cidade" role="menuitem">
+            <span class="btn btn-default">Cidade: </span>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu" >
+                <li><a href="http://<?php echo BASEURL; ?>">OferApp - Home</a></li>
+                <li class="divider"></li>
+				<?php 
+					while($row_cidade = mysqli_fetch_array($Result_cidade)){
+						$cat_cidade = $row_cidade['nome'].'-'.$row_cidade['sigla'];
+                ?>
+                <li><a href="<?php baseurl($cat_cidade);?>"><?php echo $cat_cidade; ?></a></li>
+                <?php 
+					if($pagina == $cat_cidade){
+						$catCidade = $cat_cidade;
+				
+					}
+				} 
+				
+				?>
+            </ul>
+        </div>    
+    </li>
+    <li><a href="<?php baseurl('negocios');?>">Tabloides</a></li>
+    <li><a href="<?php baseurl('negocios');?>">Ganhar Presentes</a></li>
+    
+    
+    <li class="dropdown ">
+    <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Cadastre-se<span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+    <li><a href="<?php baseurl('negocios');?>">Negócios</a></li>
+    <li class="divider"></li>
+    <li><a href="#" class="cadastrarUser" data-toggle="modal" data-target="#cadastrarUser">Cadastra-se</a></li>
+    <li><a href="" class="loginUser" data-toggle="modal" data-target=".login-sm" >Login</a></li>
+    </ul>
+    </li>
+</ul>

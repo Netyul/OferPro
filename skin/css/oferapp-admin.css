@@ -1,0 +1,84 @@
+/* CSS Document */
+.page-header{
+	margin-top:10px;
+}
+.principal .top{
+	border-bottom: 1px solid #eee;
+	margin-top: 5px;
+	margin-bottom: 25px;
+	margin-left:0;
+	margin-right:0;
+}
+/* load */
+#load{
+	background-color:#333;
+	height:100%;
+	width:100%;
+	opacity:0.5;
+	position:fixed;
+	z-index: 1000;
+}
+#load span{
+	background-color:#fff;
+	width:500px;
+	height:100px;
+	display: block;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top: -50px;
+	margin-left: -250px;
+}
+#load span{
+	font-weight: bold;
+	font-family: "Trebuchet MS", Verdana, sans-serif;
+	font-size:24px;
+	align-content:center;
+	text-align:center;
+	line-height:100px;
+	border-radius: 5px;
+}
+.small-box {
+position: relative;
+display: block;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+margin-bottom: 15px;
+}
+.bg-aqua {
+background-color: #00c0ef !important;
+}
+.small-box > .inner {
+padding: 10px;
+}
+.small-box h3 {
+font-size: 38px;
+font-weight: bold;
+margin: 0 0 10px 0;
+white-space: nowrap;
+padding: 0;
+}
+.small-box p {
+font-size: 15px;
+}
+.small-box .icon {
+position: absolute;
+top: auto;
+bottom: 5px;
+right: 5px;
+z-index: 0;
+font-size: 90px;
+color: rgba(0, 0, 0, 0.15);
+}
+.small-box > .small-box-footer {
+position: relative;
+text-align: center;
+padding: 3px 0;
+color: #fff;
+color: rgba(255, 255, 255, 0.8);
+display: block;
+z-index: 10;
+background: rgba(0, 0, 0, 0.1);
+text-decoration: none;
+}

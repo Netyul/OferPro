@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_solicitacoes" value="name:id;datatype:int,name:vendido;datatype:string,name:titulo;datatype:string,name:descricao;datatype:blob,name:valor;datatype:real,name:img;datatype:string,name:imguser;datatype:string,name:nome;datatype:string,name:celular;datatype:string,name:email;datatype:string,name:id_lojista;datatype:int,name:nomeFantasia;datatype:string" />
+</info>

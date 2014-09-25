@@ -1,0 +1,88 @@
+/* CSS Document */
+.page-header{
+	margin-top:10px;
+}
+.principal .top{
+	border-bottom: 1px solid #eee;
+	margin-top: 5px;
+	margin-bottom: 25px;
+	margin-left:0;
+	margin-right:0;
+}
+/* load */
+#load{
+	background-color:#333;
+	height:100%;
+	width:100%;
+	opacity:0.5;
+	position:fixed;
+	z-index: 1000;
+}
+#load span{
+	background-color:#fff;
+	width:500px;
+	height:100px;
+	display: block;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top: -50px;
+	margin-left: -250px;
+}
+#load span{
+	font-weight: bold;
+	font-family: "Trebuchet MS", Verdana, sans-serif;
+	font-size:24px;
+	align-content:center;
+	text-align:center;
+	line-height:100px;
+	border-radius: 5px;
+}
+
+.bloco1{
+	padding:10px;
+	background-color:#1B7FC8;
+}
+.bloco2{
+	padding:10px;
+	background-color:#00AFEF;
+}
+.bloco3{
+	padding:10px;
+	background-color:#00AFEF;
+}
+.show-grid [class^=col-] {
+padding-top: 10px;
+padding-bottom: 10px;
+background-color: #eee;
+background-color: rgba(86,61,124,.15);
+border: 1px solid #ddd;
+border: 1px solid rgba(86,61,124,.2);
+}
+.navbar{
+	margin-bottom: 5px;
+}
+.editar{
+	color:#0A6340;
+}
+.editar:visited{
+	color:#0A6340;
+}
+.excluir{
+	color:#0A6340
+}
+.excluir:visited{
+	color:#0A6340
+}
+footer{
+	background-image:url(../images/roda_pe.png);
+}
+footer .footer{
+	margin-top:3px;
+}
+.area{
+	margin-bottom: 2px;
+}
+dl{
+	text-align:left;
+}

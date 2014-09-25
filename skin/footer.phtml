@@ -1,0 +1,42 @@
+<?php
+/* 
+ * Oferapp < http://www.netyul.com.br/ >.
+ * Autor: Jefte Amorim da Costa
+ * aquivo que contem o Rodape ultilizadas no sistema Oferapp.
+ * versão 1.0
+ */	
+$pagina = isset( $urlAmigavel[0]) ? $urlAmigavel[0] : '';	
+if($pagina == 'login'){
+	
+}
+else{
+?>
+<!-- Arquivo Footer -->
+<footer>
+	<div class="container">
+    	<div class="row">
+        	<div class="col-lg-4">
+            	<h4 class="page-header">Sobre</h4>
+                <ul>
+                	<li><a href="<?php baseurl('contato-oferapp'); ?>">Contate-nos</a></li>
+                    <li><a href="#">Termos de uso</a></li>
+                    <li><a href="<?php baseurl('politica-de-privacidade'); ?>">Política de privacidade</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+            	<h4 class="page-header">Siganos-nos</h4>
+            </div>
+            <div class="col-lg-4">
+            	<h4 class="page-header">Parceiros</h4>
+            </div>
+        </div>
+        <div class="footer">
+        	
+        </div>
+    </div>
+</footer>  
+<?php
+}
+?>
+</body>
+</html>

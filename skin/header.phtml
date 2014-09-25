@@ -1,0 +1,62 @@
+<?php
+/* 
+ * Oferapp < http://www.netyul.com.br/ >.
+ * Autor: Jefte Amorim da Costa
+ * aquivo que contem o Cabeçalho ultilizadas no sistema Oferapp.
+ * versão 1.0.0
+ */	
+$pagina = isset( $urlAmigavel[0]) ? $urlAmigavel[0] : '';
+
+$query_cidade = "SELECT c.id, c.nome, e.sigla FROM cidade AS c INNER JOIN estado AS e ON c.id_uf = e.id ORDER BY c.id DESC";
+$Result_cidade = mysqli_query($dboferapp, $query_cidade);
+$row_total_row = mysqli_num_rows($Result_cidade);
+
+//usuario
+if (isset($_SESSION['user_id'])) {
+$usuarioQuery = "SELECT * FROM usuario WHERE id = ". $_SESSION['user_id'];
+$resultadoUser = mysqli_query($dboferapp, $usuarioQuery);
+$userRow = mysqli_fetch_array($resultadoUser);
+
+}
+?>
+<!-- Arquivo de Cabeçalho do site-->
+<body>
+<?php require_once('skin/cadastrarpopup.php');?>
+<?php require_once('skin/loginpopup.php');?>
+<header id="header" role="banner">
+    <div class="container" >
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<?php echo BASEURL; ?>"><img  src="<?php SkinUrl('images/logo.png');?>" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse in" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left" role="search">
+        			<div class="input-group">
+                    	
+                        <input type="text" class="form-control input-oferapp-busca" placeholder="digite sua busca! ">
+                        <span class="input-group-btn">
+                        <button type="submit" class="btn btn-Oferapp">Buscar!</button>
+                        </span>
+                    </div>
+      			</form>
+               <?php
+			   	if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != ''){
+					require_once('skin/modulos/menuuser.phtml');
+				}else{
+					require_once('skin/modulos/menusimples.phtml');
+				}
+			   ?>
+            </div><!-- /.navbar-collapse -->
+        </nav><!-- /.container-fluid -->
+       
+    </div>
+</header><!--/#header-->

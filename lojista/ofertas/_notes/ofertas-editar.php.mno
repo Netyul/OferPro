@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_editaroferta" value="name:id;datatype:int,name:titulo;datatype:string,name:tipo;datatype:string,name:descricao;datatype:blob,name:quantidade;datatype:int,name:valor;datatype:real,name:img;datatype:string,name:video;datatype:string,name:destaque;datatype:string,name:visualizacoes;datatype:int,name:id_lojista;datatype:int,name:datacadastro;datatype:timestamp" />
+	<infoitem key="UD_ofertas" value="name:id;datatype:int,name:titulo;datatype:string,name:tipo;datatype:string,name:descricao;datatype:blob,name:quantidade;datatype:int,name:valor;datatype:real,name:img;datatype:string,name:video;datatype:string,name:destaque;datatype:string,name:visualizacoes;datatype:int,name:id_lojista;datatype:int,name:datacadastro;datatype:timestamp" />
+	<infoitem key="UD_lojista" value="name:id;datatype:int,name:nomeEmpresa;datatype:string,name:nomeResponsavel;datatype:string,name:email;datatype:string,name:senha;datatype:string,name:endereco;datatype:string,name:bairro;datatype:string,name:cidade;datatype:int,name:cep;datatype:string,name:cpf;datatype:string,name:cnpj;datatype:string,name:tipoLojista;datatype:string,name:telefone;datatype:string,name:celular;datatype:string,name:img;datatype:string,name:nomeFantasia;datatype:string,name:statos;datatype:string,name:id_admin;datatype:int" />
+	<infoitem key="UD_solicitacoes" value="name:id;datatype:int,name:id_oferta;datatype:int,name:id_cliente;datatype:int,name:vendido;datatype:string,name:data;datatype:timestamp,name:id_lojista;datatype:int" />
+</info>

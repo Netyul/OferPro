@@ -67,6 +67,20 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	
   mysql_select_db($database_dboferapp, $dboferapp);
   $Result1 = mysql_query($insertSQL, $dboferapp) or die(mysql_error());
+   
+   $db = mysqli_connect($hostname_dboferapp,$username_dboferapp,$password_dboferapp,$database_dboferapp);
+	$notificar ="SELECT * FROM rec_notificacao WHERE id_lojista = ".$_POST['id_lojista'];
+	$rsnotificar = mysqli_query($db,$notificar);
+	$rowsNotificar = mysqli_fetch_array($rsnotificar);
+	$totalrsnotificar = mysqli_num_rows($rsnotificar);
+	if($totalrsnotificar>0){
+		$SelectOfertas="SELECT * FROM ofertas WHERE id_lojista = ".$_POST['id_lojista']." AND titulo= '".$_POST['titulo']."'";
+		$RSselectOfertas = mysqli_query($db,$SelectOfertas);
+		$rowSelectOfertas = mysqli_fetch_array($RSselectOfertas);
+		
+		$insertNotificar = "INSERT INTO notificacao(id_user, id_lojista, id_oferta, visualizado) VALUES (".$rowsNotificar['id_user'].",".$rowsNotificar['id_lojista'].",".$rowSelectOfertas['id'].",'not') ";
+		$RSinsertNotificar = mysqli_query($db,$insertNotificar);
+	}
 
   $insertGoTo = "ofertas.php?action=cadastrado";
   if (isset($_SERVER['QUERY_STRING'])) {

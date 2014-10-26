@@ -97,7 +97,7 @@ section{
 .page-header {
 padding-bottom: 9px;
 margin: 40px 0 20px;
-border-bottom: 1px solid #00A859;
+
 }
 mark{background-color:#0A6340; color:#fff;}
 .Slogan p{
@@ -105,6 +105,10 @@ mark{background-color:#0A6340; color:#fff;}
 	}
 .img-section{
 	margin-top: 10px;
+}
+.nav-tabs.nav-justified>li>a {
+margin-bottom: 5px;
+text-align: left;
 }
 /* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
 
@@ -141,7 +145,10 @@ mark{background-color:#0A6340; color:#fff;}
 .img-section{
 	margin-top: 15px;
 }
-
+.nav-tabs.nav-justified>li>a {
+margin-bottom: 5px;
+text-align: left;
+}
 }
 
 /* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
@@ -210,5 +217,9 @@ margin: 80px auto;
 }
 .Slogan h1{
 	font-size:30px;
+}
+.nav-tabs.nav-justified>li>a {
+margin-bottom: 5px;
+text-align: center;
 }
 }

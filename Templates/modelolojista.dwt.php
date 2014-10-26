@@ -1,4 +1,43 @@
-﻿<!DOCTYPE HTML>
+﻿<?php require_once('../Connections/dboferapp.php'); ?>
+<?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
+
+mysql_select_db($database_dboferapp, $dboferapp);
+$query_RSsolicitar = "SELECT * FROM solicitacoes WHERE vendido = 'not'";
+$RSsolicitar = mysql_query($query_RSsolicitar, $dboferapp) or die(mysql_error());
+$row_RSsolicitar = mysql_fetch_assoc($RSsolicitar);
+$totalRows_RSsolicitar = mysql_num_rows($RSsolicitar);
+?>
+<!DOCTYPE HTML>
 <!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
 <!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
 <!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
@@ -6,6 +45,7 @@
 <html dir="ltr" lang='pt'>
 <head>
 <meta charset="utf-8" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <!-- TemplateBeginEditable name="doctitle" -->
 <title>Administração da OferApp Lojista</title>
 <!-- TemplateEndEditable -->
@@ -14,7 +54,6 @@
 <link href="../admin/css/oferapp.css" rel="stylesheet" type="text/css" />
 <link href="../admin/css/oferapp-boilerplate.css" rel="stylesheet" type="text/css" />
 <link href="../admin/css/oferapp-admin.css" rel="stylesheet" type="text/css" />
-
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -45,9 +84,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	
-                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas">Ofertas</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides">Tabloides</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes">Presentes</a></li>
+                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas" title="Ofertas" ><img src="../skin/images/icon_menu_navegacao_usuario_01.png" class=" pull-left" width="39"> Ofertas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides" title="Tabloides"><img src="../skin/images/icon_menu_navegacao_usuario_04.png" class=" pull-left" width="39"> Tabloides</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes" title="Presentes"><img src="../skin/images/icon_menu_navegacao_usuario_03.png" width="39" class=" pull-left"> Presentes</a></li>
                     <li class="dropdown ">
                         <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo LNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -57,21 +96,29 @@
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
-        </nav><!-- /.container-fluid -->
-       
+        </nav><!-- /.container-fluid -->   
     </div>
 </header><!--/#header-->
 <main>
     <div class="container">
         <div class="area principal">
             <div class="top page-header">
-            <!-- TemplateBeginEditable name="tituloPagina" -->
-            <?php 
-				
-			?>
-            <h2> <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Administração</h2>
-            <?php ?>
-            <!-- TemplateEndEditable -->
+                <div class="row">
+                    <div class="col-md-6">
+                    <!-- TemplateBeginEditable name="tituloPagina" -->
+                   
+                    	<h2> <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Administração</h2>
+                    
+                    <!-- TemplateEndEditable -->
+                    </div>
+                    <div class="col-md-6" align="right">
+                        <ul class="nav nav-pills pull-right">
+                          <li class="active"><a href="../lojista/ofertas/solicitacoes/">Solicitações <?php if($totalRows_RSsolicitar < 0){echo '<span class="badge pull-right">'.$totalRows_RSsolicitar.'</span>';} ?></a></li>
+                          <li><a href="#">vendidos</a></li>
+                          
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="row">
             <!-- TemplateBeginEditable name="conteudo" -->
@@ -91,3 +138,6 @@
 </body>
 <!-- TemplateEndEditable -->
 </html>
+<?php
+mysql_free_result($RSsolicitar);
+?>

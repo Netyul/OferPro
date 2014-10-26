@@ -17,7 +17,7 @@
 	 
 	 $input['login']   = mysqli_real_escape_string($dboferapp, trim($_POST['login']));
 	 $input['senha']   = mysqli_real_escape_string($dboferapp, trim($_POST['senha']));
-	 $input['lembrar'] = $_POST['lembrar'];
+	 $input['lembrar'] = isset($_POST['lembrar'])? $_POST['lembrar'] : "";
 	 
 	 if(empty($input['login']) && empty($input['senha'])){
 		 

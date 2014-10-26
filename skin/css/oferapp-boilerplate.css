@@ -103,7 +103,7 @@ sub { bottom: -0.25em; }
    Lists
    ========================================================================== */
 
-ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
+ul, ol { margin:0; padding: 0 0 0 40px; }
 dd { margin: 0 0 0 40px; }
 nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
 
@@ -201,7 +201,7 @@ textarea { overflow: auto; vertical-align: top; resize: vertical; }
 
 /* Colors for form validity */
 input:valid, textarea:valid {  }
-input:invalid, textarea:invalid { background-color: #f0dddd; }
+input:invalid, textarea:invalid { background-color: #fff; }
 
 
 /* =============================================================================
@@ -306,6 +306,7 @@ color: #333;
 	margin-top: -100px;
 	border-radius: 5px 5px 0 0;
 	text-align:center;
+	padding-bottom:20px;
 }
 
 .area, .inicial{
@@ -344,7 +345,7 @@ background: #fff;
 	
 }
 .inicial h1{
-	color: #FFFFFF;
+	color: #333;
 	font-size:30px;
 }
 .glyphicon{
@@ -386,7 +387,12 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
 	color:	#000;
 	font-weight:bold;
 	}
-
+.nav-tabs>li>a {
+	text-align:left;
+	color: #555;
+	line-height: 26px;
+	vertical-align:middle;
+}
 
 
 .inicial .top{
@@ -430,6 +436,13 @@ vertical-align: middle;
 -o-transition: opacity 300ms;
 transition: opacity 300ms;
 }
+.thumbnail .overlay p{
+	white-space: inherit;
+	word-wrap: break-word; 
+	 height:110px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
 .thumbnail{
 	margin-bottom: 2px;
 	margin-top: 2px;
@@ -441,7 +454,7 @@ transition: opacity 300ms;
 }
 footer{
 	
-	background-color:rgba(221,221,221,1.00);
+	background-color:#A8CF45;
 }
 footer h4{
 	text-align:center;
@@ -466,7 +479,7 @@ footer ul{
 	padding: 0;
 }
 footer ul li a {
-	color:rgba(110,189,5,1.00);
+	color:#0A6340;
 }
 footer ul li a:hover{
 	color:#0A6340 ;
@@ -490,6 +503,19 @@ select{
 }
 .login .modal{
 	display:block;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+color: #333;
+background-color: #e8e8e8;
+}
+.nav>li>a {
+position: relative;
+display: block;
+color:#666;
+text-align:left;
+}
+.inicial row ul{
+	margin-bottom: 20px;
 }
 
 /* ==|== non-semantic helper classes ========================================

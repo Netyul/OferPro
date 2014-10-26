@@ -42,14 +42,14 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse in" id="bs-example-navbar-collapse-1">
-                <form class=" form-group navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-left" role="search">
         			<div class="input-group">
                     <div class="input-group-btn">	
-                        <select class=" btn btn-default form-control" id="busca" name="busca">
+                        <select class="form-control" id="busca" name="busca" style="width:68px; padding-left:10px; padding-right:10px">
                          
-                        	<option class="form-control" value="1"><a>Ofertas</a></option>
-                            <<option class="form-control"  value="2"><a>Tabloide</a></option>
-                            <option class="form-control"  value="3"><a>Sorteios</a></option>
+                        	<option class="form-control" value="1">Ofertas</option>
+                            <<option class="form-control"  value="2">Tabloide</option>
+                            <option class="form-control"  value="3">Sorteios</option>
                             
                         </select>
                       </div>
@@ -322,6 +322,12 @@
             </div>
             <div class="col-lg-4">
             	<h4 class="page-header">Siganos-nos</h4>
+                <div class="thumbnail">
+                	<img src="images/icon-social-fb.png" class="img-thumbnail">
+                    <img src="images/icon-social-twitter.png" class="img-thumbnail">
+                    <img src="images/icon-social-linkedin.png" class="img-thumbnail">
+                    <img src="images/icon-social-googleplus.png" class="img-thumbnail">
+                </div>
             </div>
             <div class="col-lg-4">
             	<h4 class="page-header">Parceiros</h4>

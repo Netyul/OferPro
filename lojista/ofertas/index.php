@@ -1,4 +1,4 @@
-﻿<?php require_once('../verificar-login.php');?>
+<?php require_once('../verificar-login.php');?>
 <?php require_once('../../Connections/dboferapp.php'); ?>
 <?php
 require_once('../../sistema/classes/W3_Image.class.php');
@@ -43,6 +43,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	
+	
 	$imagetype = explode('/', $_FILES['img']['type']);				   
 	$imagetemp = $_FILES['img']['tmp_name'];
 	$strKey    = substr(md5(uniqid(microtime())),0, 28);
@@ -67,6 +68,20 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	
   mysql_select_db($database_dboferapp, $dboferapp);
   $Result1 = mysql_query($insertSQL, $dboferapp) or die(mysql_error());
+  
+  $db = mysqli_connect($hostname_dboferapp,$username_dboferapp,$password_dboferapp,$database_dboferapp);
+	$notificar ="SELECT * FROM rec_notificacao WHERE id_lojista = ".$_POST['id_lojista'];
+	$rsnotificar = mysqli_query($db,$notificar);
+	$rowsNotificar = mysqli_fetch_array($rsnotificar);
+	$totalrsnotificar = mysqli_num_rows($rsnotificar);
+	if($totalrsnotificar>0){
+		$SelectOfertas="SELECT * FROM ofertas WHERE id_lojista = ".$_POST['id_lojista']." AND titulo= '".$_POST['titulo']."'";
+		$RSselectOfertas = mysqli_query($db,$SelectOfertas);
+		$rowSelectOfertas = mysqli_fetch_array($RSselectOfertas);
+		
+		$insertNotificar = "INSERT INTO notificacao(id_user, id_lojista, id_oferta, visualizado) VALUES (".$rowsNotificar['id_user'].",".$rowsNotificar['id_lojista'].",".$rowSelectOfertas['id'].",'not') ";
+		$RSinsertNotificar = mysqli_query($db,$insertNotificar);
+	}
 
   $insertGoTo = "index.php?action=cadastrado";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -160,15 +175,15 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
 <html dir="ltr" lang='pt'><!-- InstanceBegin template="/Templates/modelolojista.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <meta charset="utf-8" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Lojista Ofertas e Promoções</title>
+<title>Lojista Ofertas e Promo&ccedil;&otilde;es</title>
 <!-- InstanceEndEditable -->
 <link href="../../admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../../admin/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 <link href="../../admin/css/oferapp.css" rel="stylesheet" type="text/css" />
 <link href="../../admin/css/oferapp-boilerplate.css" rel="stylesheet" type="text/css" />
 <link href="../../admin/css/oferapp-admin.css" rel="stylesheet" type="text/css" />
-
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -199,9 +214,9 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	
-                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas">Ofertas</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides">Tabloides</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes">Presentes</a></li>
+                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas" title="Ofertas" ><img src="../../skin/images/icon_menu_navegacao_usuario_01.png" class=" pull-left" width="39"> Ofertas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides" title="Tabloides"><img src="../../skin/images/icon_menu_navegacao_usuario_04.png" class=" pull-left" width="39"> Tabloides</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes" title="Presentes"><img src="../../skin/images/icon_menu_navegacao_usuario_03.png" width="39" class=" pull-left"> Presentes</a></li>
                     <li class="dropdown ">
                         <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo LNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -211,26 +226,36 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
-        </nav><!-- /.container-fluid -->
-       
+        </nav><!-- /.container-fluid -->   
     </div>
 </header><!--/#header-->
 <main>
     <div class="container">
         <div class="area principal">
             <div class="top page-header">
-            <!-- InstanceBeginEditable name="tituloPagina" -->
+                <div class="row">
+                    <div class="col-md-6">
+                    <!-- InstanceBeginEditable name="tituloPagina" -->
             <?php 
 				
 			?>
-            <h2 title="Ofertas e Promoções" > <span class="glyphicon glyphicon-search"></span> Ofertas e Promoções</h2>
+            <h2><img src="../../skin/images/icon_menu_navegacao_usuario_01.png" width="29"> Ofertas e Promo&ccedil;&otilde;es</h2>
             <?php ?>
             <!-- InstanceEndEditable -->
+                    </div>
+                    <div class="col-md-6" align="right">
+                        <ul class="nav nav-pills pull-right">
+                          <li class="active"><a href="solicitacoes/">Solicitações <?php if($totalRows_RSsolicitar < 0){echo '<span class="badge pull-right">'.$totalRows_RSsolicitar.'</span>';} ?></a></li>
+                          <li><a href="#">vendidos</a></li>
+                          
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="row">
             <!-- InstanceBeginEditable name="conteudo" -->
               
-              <div class="col-md-4">
+              <div class="col-md-4" align="left">
               <div class="panel panel-default">
                 	<div class="panel-heading">Ofertas Cadatradas</div>
                     <div class="panel-body">
@@ -238,7 +263,7 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
                       <table class="table">
                       	  <?php if($totalRows_ofertas == 0){?>
                           <tr>
-                          	<td colspan="3">Não a ofertas cadastradas para Você.</td>
+                          	<td colspan="3">N&atilde;o há ofertas cadastradas para voc&ecirc;.</td>
                           </tr>
                           <?php }else{ do { ?>
                           <tr>
@@ -269,9 +294,6 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
                 
             </div>
               </div>
-              <div class="col-md-8" style="padding:5px;" align="right">
-            	<a href="<?php echo BASEURL;?>/lojista/ofertas/solicitacoes" class="btn btn-default"><?php echo htmlentities('Solicitações', ENT_COMPAT, 'utf-8'); ?> <?php if($totalRows_solicitacoes > 0){ echo '<span class="badge">'.$totalRows_solicitacoes.'</span>';}?></a>
-              </div>
               <div class="col-md-8">
                <?php
 			   			if(isset($_GET['action'])){
@@ -301,14 +323,14 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
                             <label for="tipo-oferta" class="col-sm-4 control-label">Tipo da Oferta:</label>
                             <div class="col-sm-3">
                             <select name="tipo" class="form-control">
-                              <option value="serviço" <?php if (!(strcmp("serviço", ""))) {echo "SELECTED";} ?>>Serviço</option>
+                              <option value="servi�o" <?php if (!(strcmp("servi�o", ""))) {echo "SELECTED";} ?>>Servi&ccedil;o</option>
                               <option value="Produto" <?php if (!(strcmp("Produto", ""))) {echo "SELECTED";} ?>>Produto</option>
                             </select>
                             
                             </div>
                           </div>
                           <div class="form-group">
-                            <label for="descricao-oferta" class="col-sm-12">Descrição da oferta:</label>
+                            <label for="descricao-oferta" class="col-sm-12">Descri&ccedil;&atilde;o da oferta:</label>
                           </div>
                           <div class="form-group">
                           	<div class="col-sm-12">

@@ -54,6 +54,7 @@ $totalRows_lojista = mysql_num_rows($lojista);
 <html dir="ltr" lang='pt'><!-- InstanceBegin template="/Templates/modelolojista.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <meta charset="utf-8" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>OferApp Perfil Lojista</title>
 <!-- InstanceEndEditable -->
@@ -62,7 +63,6 @@ $totalRows_lojista = mysql_num_rows($lojista);
 <link href="../../admin/css/oferapp.css" rel="stylesheet" type="text/css" />
 <link href="../../admin/css/oferapp-boilerplate.css" rel="stylesheet" type="text/css" />
 <link href="../../admin/css/oferapp-admin.css" rel="stylesheet" type="text/css" />
-
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -93,9 +93,9 @@ $totalRows_lojista = mysql_num_rows($lojista);
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	
-                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas">Ofertas</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides">Tabloides</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes">Presentes</a></li>
+                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas" title="Ofertas" ><img src="../../skin/images/icon_menu_navegacao_usuario_01.png" class=" pull-left" width="39"> Ofertas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides" title="Tabloides"><img src="../../skin/images/icon_menu_navegacao_usuario_04.png" class=" pull-left" width="39"> Tabloides</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes" title="Presentes"><img src="../../skin/images/icon_menu_navegacao_usuario_03.png" width="39" class=" pull-left"> Presentes</a></li>
                     <li class="dropdown ">
                         <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo LNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -105,21 +105,31 @@ $totalRows_lojista = mysql_num_rows($lojista);
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
-        </nav><!-- /.container-fluid -->
-       
+        </nav><!-- /.container-fluid -->   
     </div>
 </header><!--/#header-->
 <main>
     <div class="container">
         <div class="area principal">
             <div class="top page-header">
-            <!-- InstanceBeginEditable name="tituloPagina" -->
+                <div class="row">
+                    <div class="col-md-6">
+                    <!-- InstanceBeginEditable name="tituloPagina" -->
             <?php 
 				
 			?>
             <h2> <span class="glyphicon glyphicon-bookmark icon-destaque"></span> Perfil</h2>
             <?php ?>
             <!-- InstanceEndEditable -->
+                    </div>
+                    <div class="col-md-6" align="right">
+                        <ul class="nav nav-pills pull-right">
+                          <li class="active"><a href="../ofertas/solicitacoes/">Solicitações <?php if($totalRows_RSsolicitar < 0){echo '<span class="badge pull-right">'.$totalRows_RSsolicitar.'</span>';} ?></a></li>
+                          <li><a href="#">vendidos</a></li>
+                          
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="row">
             <!-- InstanceBeginEditable name="conteudo" -->

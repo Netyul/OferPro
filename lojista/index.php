@@ -90,6 +90,8 @@ $query_buscas = "SELECT * FROM busca ORDER BY veses DESC";
 $buscas = mysql_query($query_buscas, $dboferapp) or die(mysql_error());
 $row_buscas = mysql_fetch_assoc($buscas);
 $totalRows_buscas = mysql_num_rows($buscas);
+
+
 ?>
 <!DOCTYPE HTML>
 <!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
@@ -99,6 +101,7 @@ $totalRows_buscas = mysql_num_rows($buscas);
 <html dir="ltr" lang='pt'><!-- InstanceBegin template="/Templates/modelolojista.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <meta charset="utf-8" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>OferApp para Lojista</title>
 <!-- InstanceEndEditable -->
@@ -107,7 +110,6 @@ $totalRows_buscas = mysql_num_rows($buscas);
 <link href="../admin/css/oferapp.css" rel="stylesheet" type="text/css" />
 <link href="../admin/css/oferapp-boilerplate.css" rel="stylesheet" type="text/css" />
 <link href="../admin/css/oferapp-admin.css" rel="stylesheet" type="text/css" />
-
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -138,9 +140,9 @@ $totalRows_buscas = mysql_num_rows($buscas);
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	
-                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas">Ofertas</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides">Tabloides</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes">Presentes</a></li>
+                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas" title="Ofertas" ><img src="../skin/images/icon_menu_navegacao_usuario_01.png" class=" pull-left" width="39"> Ofertas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides" title="Tabloides"><img src="../skin/images/icon_menu_navegacao_usuario_04.png" class=" pull-left" width="39"> Tabloides</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes" title="Presentes"><img src="../skin/images/icon_menu_navegacao_usuario_03.png" width="39" class=" pull-left"> Presentes</a></li>
                     <li class="dropdown ">
                         <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo LNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -150,32 +152,42 @@ $totalRows_buscas = mysql_num_rows($buscas);
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
-        </nav><!-- /.container-fluid -->
-       
+        </nav><!-- /.container-fluid -->   
     </div>
 </header><!--/#header-->
 <main>
     <div class="container">
         <div class="area principal">
             <div class="top page-header">
-            <!-- InstanceBeginEditable name="tituloPagina" -->
+                <div class="row">
+                    <div class="col-md-6">
+                    <!-- InstanceBeginEditable name="tituloPagina" -->
             <?php 
 				
 			?>
             <h2> <span class="glyphicon glyphicon-bookmark icon-destaque"></span> Administração Lojista</h2>
             <?php ?>
             <!-- InstanceEndEditable -->
+                    </div>
+                    <div class="col-md-6" align="right">
+                        <ul class="nav nav-pills pull-right">
+                          <li class="active"><a href="ofertas/solicitacoes/">Solicitações <?php if($totalRows_RSsolicitar < 0){echo '<span class="badge pull-right">'.$totalRows_RSsolicitar.'</span>';} ?></a></li>
+                          <li><a href="#">vendidos</a></li>
+                          
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="row">
             <!-- InstanceBeginEditable name="conteudo" -->
               
-              <div class="col-md-4">
+              <div class="col-md-4" align="left">
               <div class="panel panel-default">
                     	<div class="panel-heading"> Feedback de Pesquisas <span class="glyphicon glyphicon-search"></span></div>
                         <table class="table">
                           <?php if ($totalRows_buscas == 0) { // Show if recordset empty ?>
                           <tr>
-                            <td>Não a nenhuma busca registrada</td>
+                            <td>Não há nenhuma busca registrada</td>
                           </tr>
                           <?php } // Show if recordset empty ?>
 						  <?php do { ?>
@@ -190,29 +202,29 @@ $totalRows_buscas = mysql_num_rows($buscas);
               </div>
               <div class="col-md-8">
               <div class="row">
-                        <div class="col-md-12" style=" text-align:center; padding:10px;">
+                       
                             <?php
                             if(isset($_GET['action'])){
                                 if($_GET['action'] == 'cadastrado'){
-                                    echo '<div class="alert alert-success" role="alert">Lojista Cadastrado!</div>';
+                                    echo '<div class="col-md-12" style=" text-align:center; padding:10px;"><div class="alert alert-success" role="alert">Lojista Cadastrado!</div></div>';
                                 }
                                 elseif($_GET['action'] == 'excluido'){
-                                    echo '<div class="alert alert-success" role="alert">Lojista Excluido!</div>';
+                                    echo '<div class="col-md-12" style=" text-align:center; padding:10px;"><div class="alert alert-success" role="alert">Lojista Excluido!</div></div>';
                                 }
                                 elseif($_GET['action'] == 'editado'){
-                                    echo '<div class="alert alert-success" role="alert">Lojista Editado!</div>';
+                                    echo '<div class="col-md-12" style=" text-align:center; padding:10px;"><div class="alert alert-success" role="alert">Lojista Editado!</div></div>';
                                 }
                                 
                             }
                             ?>
                             
-                        </div>
+                        
                         <div class="col-md-4">
                         <div class="panel panel-primary">
                             <div class="panel-heading">Ofertas cadatradas</div>
                             <div class="panel-body">
                             	<?php if($totalRows_ofertas == 0){?>
-									<p>Não a Ofertas cadastradas</p>
+									<p>Não há Ofertas cadastradas</p>
                                 <?php }else{?>
                                 <h4><?php echo $totalRows_ofertas;?> <span class="glyphicon glyphicon-shopping-cart"></span></h4>
                                 <?php } ?>
@@ -224,7 +236,7 @@ $totalRows_buscas = mysql_num_rows($buscas);
                                 <div class="panel-heading">Tabloides cadastrados</div>
                                 <div class="panel-body">
                                 <?php if($totalRows_tabloides == 0){?>
-									<p>Não a tabloides cadastradas</p>
+									<p>Não há tabloides cadastradas</p>
                                 <?php }else{?>
                                    <h4><?php echo $totalRows_tabloides;?> <span class="glyphicon glyphicon glyphicon-bullhorn"></span></h4>
                                    <?php } ?> 
@@ -236,7 +248,7 @@ $totalRows_buscas = mysql_num_rows($buscas);
                                 <div class="panel-heading">Presentes cadastrados</div>
                                 <div class="panel-body">
                                 <?php if($totalRows_presentes == 0){?>
-									<p>Não a presentes cadastradas</p>
+									<p>Não há presentes cadastradas</p>
                                 <?php }else{?>
                                     <h4><?php echo $totalRows_presentes;?> <span class="glyphicon glyphicon glyphicon glyphicon-gift"></span></h4>
                                     <?php } ?> 

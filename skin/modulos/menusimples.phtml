@@ -1,3 +1,98 @@
+<script> 
+  window . fbAsyncInit =  function ()  { 
+    FB . init ({ 
+      appId       :  '949809085036349' , 
+      xfbml       :  true , 
+      version     :  'v2.1' 
+    }); 
+  };
+
+  ( function ( d , s , id ){ 
+     var js , fjs = d . getElementsByTagName ( s )[ 0 ]; 
+     if  ( d . getElementById ( id ))  { return ;} 
+     js = d . createElement ( s ); js . id = id ; 
+     js . src =  "//connect.facebook.net/en_US/sdk.js" ; 
+     fjs . parentNode . insertBefore ( js , fjs ); 
+   }( document ,  'script' ,  'facebook-jssdk' )); 
+   // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '949809085036349',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.1' // use version 2.1
+  });
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/pt_BR/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('Bem vindo! A OferApp... ');
+    FB.api('/me', function(response) {
+      console.log('Logado com sucesso: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Obrigado por fazer login, ' + response.name + '!';
+    });
+  }
+</script>
 <ul class="nav navbar-nav navbar-right">
     <li>
         <div class="btn-group btn-group-cidade" role="menuitem">
@@ -7,7 +102,7 @@
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu" role="menu" >
-                <li><a href="http://<?php echo BASEURL; ?>">OferApp - Home</a></li>
+                <li><a href="<?php echo BASEURL; ?>">OferApp - Home</a></li>
                 <li class="divider"></li>
 				<?php 
 					while($row_cidade = mysqli_fetch_array($Result_cidade)){
@@ -25,17 +120,17 @@
             </ul>
         </div>    
     </li>
-    <li><a href="<?php baseurl('negocios');?>">Tabloides</a></li>
-    <li><a href="<?php baseurl('negocios');?>">Ganhar Presentes</a></li>
-    
-    
+    <li><a href="#">Baixar App</a></li>    
     <li class="dropdown ">
     <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Cadastre-se<span class="caret"></span></a>
     <ul class="dropdown-menu" role="menu">
-    <li><a href="<?php baseurl('negocios');?>">Negócios</a></li>
+    <li><a href="#cadastrarLojista" id="modalLojista" data-toggle="modal">Negócios</a></li>
     <li class="divider"></li>
-    <li><a href="#" class="cadastrarUser" data-toggle="modal" data-target="#cadastrarUser">Cadastra-se</a></li>
+    <li><a href="#" class="cadastrarUser" id="modalUser" data-toggle="modal" data-target="#cadastrarUser">Cadastra-se</a></li>
     <li><a href="" class="loginUser" data-toggle="modal" data-target=".login-sm" >Login</a></li>
+    <li><a><fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+		</fb:login-button>
+		<div id="status"></div></a></li>
     </ul>
     </li>
 </ul>

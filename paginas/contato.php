@@ -18,26 +18,26 @@ $resultado_contato = mysqli_query($dboferapp, $query_contato);
 $email_row = mysqli_fetch_assoc($resultado_contato);
 $row_emaildb = mysqli_fetch_array($resultado_contato);
 $row_totalRows = mysqli_num_rows($resultado_contato);
-?>
+
+
+									?>
+
 <main>
     <div class="container">
         <div class="area inicial">
             <div class="top page-header">
-            	<h2>  <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Contato </h2>
+            	<h2>  <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Contate-nos</h2>
             
             </div>
             <div class="row">
-                <div class="col-md-8">
-                    <form method="post" action="<?php baseurl('contato-oferapp'); ?>">
+                <div class="col-md-8" style="border-right: 1px #CCC solid;">
+                   
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
                             <div class="panel-heading" itemprop="nome">Contate-nos</div>
                             <div class="panel-body">
-                            	<p itemprop="description">Essa Formulario e destinado para os Clientes que queiram tirar Duvidas sobr o sistema, e pedir suporte para Cadastros de novas ofertas, sorteios, e tabloides! </p>
-                            </div>
-                            <!-- List group -->
                             <?php
-									if(isset($_POST['enviar'])){
+							if(isset($_POST['enviar'])){
 										//recuperando formulario
 										$nome      = $_POST['contato-nome'];
 										$para     = $_POST['contato-email'];
@@ -70,46 +70,47 @@ $row_totalRows = mysqli_num_rows($resultado_contato);
 										
 									}else{
 								?>
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                	<div class="input-group">
-                                        <span class="input-group-addon">Nome:</span>
-                                        <input type="text" class="form-control"  id="contato-nome" name="contato-nome" placeholder="Digite seu nome">
+                            	 <form method="post" action="<?php baseurl('contato'); ?>" class="form-horizontal" role="form">
+                                 	<div class="form-group">
+                                        <label class="col-sm-2 control-label">Nome:</label>
+                                        <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="contato-nome" name="contato-nome" placeholder="Digite seu nome">
+                                        </div>
                                     </div>
-                                </li>
-                                <li class="list-group-item">
-                                	<div class="input-group">
-                                        <span class="input-group-addon">Email:</span>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Email:</label>
+                                        <div class="col-sm-9">
                                         <input type="email" class="form-control"  id="contato-email" name="contato-email" placeholder="Digite seu email">
+                                        </div>
                                     </div>
-                                </li>
-                                <li class="list-group-item">
-                                <div class="input-group">
-                                        <span class="input-group-addon">Telefone:</span>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Telefone:</label>
+                                        <div class="col-sm-5">
                                         <input type="tel" size="10" class="form-control"  id="contato-tel" name="contato-tel" placeholder="Digite seu telefone">
-                                        
+                                        </div>
                                     </div>
-                                </li>
-                                <li class="list-group-item">
-                                	<div class="input-group">
-                                    	<span class="input-group-addon">Celular:</span>
+                                    <div class="form-group">
+                                    	<label class="col-sm-2 control-label">Celular:</label>
+                                        <div class="col-sm-5">
                                         <input type="tel" size="11" class="form-control"  id="contato-cel" name="contato-cel" placeholder="Digite seu Celular">
+                                        </div>
                                     </div>
-                                </li>
-                                <li class="list-group-item">
-                                	<div class="input-group">
-                                    	<span class="input-group-addon">Celular:</span>
+                                    <div class="form-group">
+                                    	<label class="col-sm-2 control-label">Assunto:</label>
+                                        <div class="col-sm-9">
                                         <input type="text" size="100" class="form-control"  id="contato-assunto" name="contato-assunto" placeholder="Digite o Assunto">
+                                        </div>
                                     </div>
-                                </li>
-                                <li class="list-group-item">
+                                    <div class="form-group">
                                 	Descrição
-                                </li>
-                                <li class="list-group-item">
+                                	</div>
+                                    <div class="form-group">
+                                    <div class="col-sm-12">
                                 	<textarea class="form-control" id="contato-descri" name="contato-descri" placeholder="Digite sua mensagem"></textarea>
-                                </li>
-                            </ul>
-                            <div class="panel-footer"><input type="submit" class="btn btn-Oferapp" value="Enviar" id="enviar" name="enviar"></div>
+                                    </div>
+                                	</div>
+                               </div>
+                            <div class="panel-footer"><button type="submit" class="btn btn-Oferapp" id="enviar" name="enviar">Enviar</button></div>
                         </div>
                         <?php
 									}
@@ -117,6 +118,12 @@ $row_totalRows = mysqli_num_rows($resultado_contato);
                 	</form>
                 </div>
                 <div class="col-md-4">
+                	<ul class="nav nav-pills nav-stacked" role= "tablist">
+                    	<li class="active"><a href="contato">Contate-nos</a></li>
+                        <li><a href="quem-somos">Quem Somos</a></li>
+                    	<li><a href="#">Termos de uso</a></li>
+                        <li><a href="politica-de-privacidade">Política de privacidade</a></li>
+                    </ul>
                 </div>
             </div>
         </div>

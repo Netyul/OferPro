@@ -8,25 +8,30 @@
 
 require_once('skin/section.phtml');
 
-
-
 ?>
 <main>
     <div class="container">
         <div class="area inicial">
-            <div class="top page-header">
-            <?php 
-				if($pagina == $catCidade){
-			?>
-            	<h2>  <span class="glyphicon glyphicon-bookmark icon-destaque"></span><?php echo $catCidade; ?></h2>
-            <?php }?>
+            <div class="top">
+            <ul class="nav nav-tabs nav-justified" role="tablist"  id="myTab">
+            	<li class="active"><a href="#ofertas" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_01.png'); ?>" width="39">Ofertas em Destaques </a></li>
+                <li><a href="#tabloides" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_04.png'); ?>" width="39"> Tabloides em Destaques </a></li>
+                <li><a href="#presentes" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_03.png'); ?>" width="39"> Ganhar Presentes</a></li>
+            </ul>            
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="ofertas">
+            	<?php require_once('paginas/cidade-ofertas.php'); ?>
             </div>
-            <div class="row">
-                <div class="col-md-8">
-                </div>
-                <div class="col-md-4">
-                </div>
+            <div class="tab-pane fade" id="tabloides">
+            	<?php require_once('paginas/cidade-tabloides.php'); ?> 
             </div>
+            <div class="tab-pane fade" id="presentes">
+            	<?php require_once('paginas/cidade-presentes.php'); ?> 
+            </div>
+        </div> 
+    </div>
+            
         </div>
     </div>
 </main>

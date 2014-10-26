@@ -9,35 +9,30 @@
 
 require_once('skin/section.phtml');
 
-$home_query = "SELECT * FROM ofertas";
-$resultHome = mysqli_query($dboferapp, $home_query);
+
 
 ?>
 <main>
 <div class="container">
     <div class="area inicial">
-        <div class="top page-header">
-            <h2>  <span class="glyphicon glyphicon-bookmark icon-destaque"></span> Destaques</h2>
-            
+        <div class="top">
+            <ul class="nav nav-tabs nav-justified" role="tablist"  id="myTab">
+            	<li class="active"><a href="#ofertas" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_01.png'); ?>" width="39">Ofertas em Destaques </a></li>
+                <li><a href="#tabloides" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_04.png'); ?>" width="39"> Tabloides em Destaques </a></li>
+                <li><a href="#presentes" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_03.png'); ?>" width="39"> Ganhar Presentes</a></li>
+            </ul>            
         </div>
-        <ul class="row">
-        <?php 
-			while($homeRows = mysqli_fetch_array($resultHome)){
-		?>
-            <li class="col-md-3 ">
-                <div class="well well-sm">
-                    <div class="thumbnail destaque-images">
-                        <img src="<?php baseurl(IMGOFERTAS. $homeRows['img']);?>" alt="<?php echo $homeRows['titulo'];?>"class="img-responsive">
-                        <div class="overlay">
-                            <p><?php echo $homeRows['descricao'];?></p>
-                        </div>
-                        <h5><?php echo $homeRows['titulo'];?></h5>
-                    </div>
-                 </div>
-            </li>
-            <?php }?>
-            
-        </ul>  
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="ofertas">
+            	<?php require_once('paginas/home-ofertas.php'); ?>
+            </div>
+            <div class="tab-pane fade" id="tabloides">
+            	<?php require_once('paginas/home-tabloides.php'); ?> 
+            </div>
+            <div class="tab-pane fade" id="presentes">
+            	<?php require_once('paginas/home-presentes.php'); ?> 
+            </div>
+        </div> 
     </div>
 </div> 
 </main>

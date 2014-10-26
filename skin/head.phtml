@@ -8,7 +8,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title><?php echo $tituloTag; ?></title>
+<meta name="description" content="<?php echo $TagsDescription; ?>" />
 <meta name="keywords" content="<?php echo $TagsKeywords; ?>" />
+<meta name="author" content="<?php echo $tagsAutor; ?>" />
+<meta name="generator" content="<?php echo $tagsGeneration; ?>"/>
 
 <link href="<?php SkinUrl('css/bootstrap.min.css')?>" rel="stylesheet" type="text/css" />
 <link href="<?php SkinUrl('css/bootstrap-theme.min.css');?>" rel="stylesheet" type="text/css" />
@@ -20,5 +23,8 @@
 <script src="<?php SkinUrl('js/jquery.min.js'); ?>"></script>
 <script src="<?php  SkinUrl('js/bootstrap.min.js');?>"></script>
 <script src="<?php SkinUrl('js/respond.min.js');?>"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBXDuvoWs1Dp4ng6Gu5rYp4oLlTrKAnz3o&amp;sensor=false"></script>
+ 
+<script type="text/javascript" src="<?php SkinUrl('js/maps.js');?>"></script>
 
 </head>

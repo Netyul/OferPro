@@ -45,6 +45,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 require_once('validar/validar-cadastro.php');
+
 $maxRows_adminLojista = 10;
 $pageNum_adminLojista = 0;
 if (isset($_GET['pageNum_adminLojista'])) {

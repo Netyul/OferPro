@@ -20,7 +20,7 @@ if(!isset($pagina) || $pagina ==''){
             </div>
             <div class="col-md-4">
             	<div class="img-section">
-                	<p><a class="btn btn-primary btn-lg" href="#">Baixar App!</a></p>
+                	
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@ else{
 	<div class="container">
     
         <ol class="breadcrumb">
-            <li><a href="http://<?php echo BASEURL; ?>">Home</a></li>
+            <li><a href="<?php echo BASEURL; ?>">Home</a></li>
             <?php
                 if(isset($pagina)){
                     if($action ==''){
@@ -51,11 +51,21 @@ else{
                     }
                 }
                 if(isset($action) && $action !=''){
+					if($subaction ==''){
             ?>
             <li class="active"><?php echo $action; ?></li>
             <?php
                 }
+				else{
             ?>
+             <li><a href="<?php baseurl($pagina.'/'.$action);?>"><?php echo $action; ?></a></li>
+            <?php 
+				}
+			}
+			if(isset($subaction) && $subaction != ''){
+			 ?>
+             <li class="active"><?php echo $subaction; ?></li>
+             <?php } ?>
         </ol>
     
     </div>

@@ -10,7 +10,6 @@ $pagina = isset( $urlAmigavel[0]) ? $urlAmigavel[0] : '';
 $query_cidade = "SELECT c.id, c.nome, e.sigla FROM cidade AS c INNER JOIN estado AS e ON c.id_uf = e.id ORDER BY c.id DESC";
 $Result_cidade = mysqli_query($dboferapp, $query_cidade);
 $row_total_row = mysqli_num_rows($Result_cidade);
-
 //usuario
 if (isset($_SESSION['user_id'])) {
 $usuarioQuery = "SELECT * FROM usuario WHERE id = ". $_SESSION['user_id'];
@@ -21,8 +20,10 @@ $userRow = mysqli_fetch_array($resultadoUser);
 ?>
 <!-- Arquivo de Cabeçalho do site-->
 <body>
-<?php require_once('skin/cadastrarpopup.php');?>
+<?php require_once('skin/cadastrar-popup.php');?>
 <?php require_once('skin/loginpopup.php');?>
+<?php require_once('skin/cadastrar-parceiro-popup.php');?>
+<?php require_once('skin/cadastrar-lojista-popup.php');?>
 <header id="header" role="banner">
     <div class="container" >
         <nav class="navbar navbar-default" role="navigation">
@@ -39,11 +40,19 @@ $userRow = mysqli_fetch_array($resultadoUser);
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse in" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-left" role="search" action="busca" method="post" autocomplete="on">
         			<div class="input-group">
-                    	
-                        <input type="text" class="form-control input-oferapp-busca" placeholder="digite sua busca! ">
+                    	<div class="input-group-btn">	
+                        <select class="form-control btn btn-default" id="busca" name="tipo" style=" padding-left:10px; padding-right:10px">
+                           	<option class="form-control" value="ofertas">Ofertas</option>
+                            <option class="form-control"  value="tabloides">Tabloide</option>
+                            <option class="form-control"  value="presentes">Presentes</option>
+                            
+                        </select>
+                      </div>
+                        <input type="text" name="buscar" class="form-control input-oferapp-busca" placeholder="digite sua busca! ">
                         <span class="input-group-btn">
+                        <input type="hidden" name="submit" value="buscar">
                         <button type="submit" class="btn btn-Oferapp">Buscar!</button>
                         </span>
                     </div>

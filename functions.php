@@ -38,6 +38,20 @@ function SkinArq($parametro){
 function incluirSistema($arquivo){
     require ('sistema/'.$arquivo.'.php');
 }
+function core($arquivo){
+	require_once('sistema/core/'.$arquivo);
+}
 function baseurl($caminho){
 	 echo BASEURL .'/'.$caminho;
+}
+function pagination($sql, $maxPost, $paginaAtual, $atributoLink = ''){
+	
+	$ResultAll = mysqli_query($sql);
+	$totalPost = mysqli_num_rows($ResultAll);
+	$paginas   = ceil($totalPost / $maxPost);
+	
+	//pagination
+	echo'<ul  class="pagination">';
+	//pagina inicial
+	echo'<li><a  href= "'.BASEURL.'/'.$_GET['url'].'" ><span class="glyphicon glyphicon-backward"></span></a></li>';
 }

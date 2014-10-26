@@ -7,13 +7,20 @@
  * versão 1.0
  */		
 	
-		
+		$query_lojista = "SELECT * FROM lojista  ORDER BY id DESC";
+		$Result_lojista = mysqli_query($dboferapp, $query_lojista);
+		while($rows_lojista = mysqli_fetch_array($Result_lojista)){
+			$lojista = str_replace(" ","-", $rows_lojista['nomeFantasia']);
+			if($pagina == $lojista){
+				$perfilLojista = $lojista;
+			}
+		}
 			
 			$action = isset($urlAmigavel[1]) ? $urlAmigavel[1] : '';
 			$subaction =isset($urlAmigavel[2]) ? $urlAmigavel[2] : '';
 		
 		
-		$paginas = array('contato','busca', 'negocios', 'usuario', 'cadastro', 'ofertas', 'tabloides','sorteios','logout', 'acessorestrito','login');
+		$paginas = array('contato', 'quem-somos','busca', 'negocios', 'usuario', 'cadastro', 'ofertas', 'tabloides','presentes','logout', 'acessorestrito','login', 'politica-de-privacidade');
 		//comparar com banco de dados
 		
 		$query_perfil = "";
@@ -30,13 +37,18 @@
 			require_once('paginas/'. $pagina .'.php');
 		}
 		//paginas de ação final
-		elseif(isset($acao) && $acao !=''){
+		/*elseif(isset($acao) && $acao !=''){
 			require_once('paginas/action.php');
-		}
+		}*/
 		//pagina de categorias
-		elseif(isset($pagina) && !in_array($pagina, $paginas) && $pagina != $catCidade){
+		/*elseif(isset($pagina) && !in_array($pagina, $paginas) && $pagina != $catCidade){
 			require_once('paginas/categorias.php');
-		}
+		}*/
+		
+		//pagina de perfil do lojista
+		elseif(isset($pagina) && isset($perfilLojista) && $pagina == $perfilLojista){
+				require_once('paginas/perfilLojista.php');
+			}
 		//pagina de erro
 		else{
 			require_once('paginas/erro-404.php');

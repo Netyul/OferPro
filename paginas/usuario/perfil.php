@@ -42,23 +42,24 @@
 						$celularUser = $_POST['celularUser'];
 						$data        = $_POST['datanascimento'];
 						$sexoUser    = $_POST['sexoUser'];
-						$imagemTemp = $_FILES['img']['tmp_name'];
-						$imagetype = explode('/', $_FILES['img']['type']);
+						$imagemTemp  = $_FILES['img']['tmp_name'];
+						$imagetype   = explode('/', $_FILES['img']['type']);
 						if($imagetype[1] =='jpeg'){
 							$imagetype[1] = 'jpg';
 						}
 						if(!empty($imagemTemp)){
+							$strKey    = substr(md5(uniqid(microtime())),0, 28);
 							$imgperfil = IMGPERFIL;
 							$editeImg = explode('.',$rows_UserEdite['img']);
-							$img = new W3_Image;
-							$img->create($imagemTemp, 218, 147,'../../'.$imgperfil. $editeImg[0].'.thumb.'.$imagetype[1]);
-							$img->create($imagemTemp, 570, 450,'../../'.$imgperfil. $editeImg[0].'.'. $imagetype[1]);
+							$img = new W3_Image();
+							$img->create($imagemTemp, 570, 450,''.$imgperfil. $editeImg[0].$strKey.'.'. $imagetype[1]);
+							
 						}
-						$imgUser = $editeImg[0].'.'. $imagetype[1];
+						$imgUser = $editeImg[0].$strKey.'.'.$imagetype[1];
 						
 						$updadeSQL = "UPDATE lojista SET nome='".$nomeUser."', email='".$emailUser."', datanascimento='".$data."' , celular='".$celularUser."' , sexo='".$sexoUser."', img='".$imgUser."' WHERE id=".$_POST['id'];
 						$Result1 = mysqli_query($dboferapp, $updadeSQL);
-						if($Result1){
+						if(isset($Result1)){
 							$msgEditeUser ='<div class="alert alert-success" role="alert">Usuario editado com sucesso!</div>';
 						}
 						else{
@@ -115,8 +116,9 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Imagem:</label>
-                            <div class="col-sm-6">
-                            	<input class="form-control" type="file"  name="img" value="<?php echo htmlentities($rows_UserEdite['img'], ENT_COMPAT, 'utf-8'); ?>" required>
+                            <div class="col-sm-6" align="left">
+                            	<input type="file" name="img" id="file-original" required>
+                                <button  type="button" class="btn btn-Oferapp" onclick="this.form.img.click()"><span class="glyphicon glyphicon-picture"></span> Procurar...</button>
                             </div>
                         </div>
                         <div class="form-group">

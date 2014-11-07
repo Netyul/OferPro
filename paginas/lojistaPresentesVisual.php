@@ -12,7 +12,7 @@ if(isset($_POST['presentiar']) && $_POST['presentiar'] == 'presentiar'){
 	$result_ganhar = mysqli_query($dboferapp, $ganhar_Query);
 	$rowGanhar = mysqli_num_rows($result_ganhar);
 	if($rowGanhar == 1){
-		$msgPresentiar = '<div class="label label-warning">Você já presentiou este usuario!</div>';
+		$msgPresentiar = '<div class="label label-warning"><strong>Você já presentiou este usuario!</strong></div>';
 	}
 	else{
 	$id_usuario  = $_POST['id_usuario'];
@@ -38,7 +38,7 @@ if(isset($_POST['ganhar']) && $_POST['ganhar'] =='ganhar'){
 	$result_ganhar = mysqli_query($dboferapp, $ganhar_Query);
 	$rowGanhar = mysqli_num_rows($result_ganhar);
 	if($rowGanhar == 1){
-		$msgGanhar = '<div class="alert alert-warning" role="alert">Você já se cadastrado a este presente!</div>';
+		$msgGanhar = '<div class="alert alert-warning" role="alert"><strong>Você já se cadastrado a este presente!</strong></div>';
 	}
 	else{
 		$idOfertas  = $_POST['id_presente'];
@@ -63,6 +63,9 @@ if(isset($perfilLojistaOfertas) && $subaction == $perfilLojistaOfertas){
 		$resultOferta = mysqli_query($dboferapp, $oferta_query);
 		$totalRowsOfertas = mysqli_num_rows($resultOferta);
 		$OfertaRows = mysqli_fetch_array($resultOferta);
+		
+		$lojista = str_replace(" ","-", $OfertaRows['nomeFantasia']);
+		$linklojista = $lojista;
 	
 ?>
 <?php require_once('skin/section.phtml'); ?>
@@ -79,13 +82,13 @@ if(isset($perfilLojistaOfertas) && $subaction == $perfilLojistaOfertas){
 				}else{
                 ?>
              
-                <div class="col-xs-12 col-sm-6 col-md-8">
+                <div class="col-md-8">
                 	<img src="<?php baseurl(IMGPRESENTES. $OfertaRows['img']);?>" alt="<?php echo $OfertaRows['titulo']; ?>" class="img-thumbnail" style="max-height:479px;" width="100%">
                 </div>
-                <div class="col-xs-6 col-md-4" align="left">
+                <div class=" col-md-4" align="left">
                 	<h3 class="page-header"> <span class="glyphicon glyphicon-bookmark icon-destaque"></span><?php echo $OfertaRows['titulo']; ?></h3>
                     <p><strong>Descrição: </strong><?php $descriccao = new texto($OfertaRows['descricao']); ?></p>
-                    <p><strong>Loja:</strong> <?php echo $OfertaRows['nomeFantasia']; ?></p>
+                    <p><strong>Nossa loja OferApp:</strong><a href="<?php baseurl($linklojista); ?>"> <?php echo $OfertaRows['nomeFantasia']; ?></a></p>
                     <p><a href="#encontrenos" class="label label-default" style="font-size:14px">Encontre-nos!</a></p>
                     <?php
 					if(isset($_SESSION['user_id']) && $_SESSION['user_id'] !=''){
@@ -96,7 +99,7 @@ if(isset($perfilLojistaOfertas) && $subaction == $perfilLojistaOfertas){
 							$result_Soli = mysqli_query($dboferapp, $soli_Query);
 							$rowSoli = mysqli_num_rows($result_Soli);
 							if($rowSoli>0){
-								echo '<div class="alert alert-success" role="alert">Você esta concorrendo a este presente!</div>';
+								echo '<div class="alert alert-success" role="alert"><strong>Você esta concorrendo a este presente!</strong></div>';
 							}else{
 					?>
                     <p>
@@ -112,8 +115,10 @@ if(isset($perfilLojistaOfertas) && $subaction == $perfilLojistaOfertas){
 							}}
 							?>
                     <?php        
-					}
+					}else{
 					?>
+                    <div class="alert alert-success" role="alert"><strong>Faça login para canditadar-se a este Presente!</strong></div>
+                    <?php } ?>
                     <h5 class="page-header"><strong>Nosso Endereço </strong></h5>
                     <p id="endereco"><?php echo $OfertaRows['endereco']; ?> - <?php echo $OfertaRows['bairro']; ?>, <?php echo $OfertaRows['cidade']; ?> - <?php echo $OfertaRows['sigla']; ?></p>
                 </div>
@@ -145,7 +150,7 @@ if(isset($perfilLojistaOfertas) && $subaction == $perfilLojistaOfertas){
 							$result_Soli = mysqli_query($dboferapp, $soli_Query);
 							$rowSoli = mysqli_num_rows($result_Soli);
 							if($rowSoli>0){
-								echo '<div class="label label-success">Você presentiou este usuario!</div>';
+								echo '<div class="label label-success"><strong>Você presentiou este usuario!</strong></div>';
 							}else{
 						?>
                         <form action="<?php baseurl($perfilLojista.'/'.$action.'/'.$subaction); ?>" method="post" name="presentear" id="presentear" autocomplete="off">

@@ -44,6 +44,9 @@ if(isset($perfilLojistaOfertas) && $subaction == $perfilLojistaOfertas){
 		$resultOferta = mysqli_query($dboferapp, $oferta_query);
 		$totalRowsOfertas = mysqli_num_rows($resultOferta);
 		$OfertaRows = mysqli_fetch_array($resultOferta);
+		
+		$lojista = str_replace(" ","-", $OfertaRows['nomeFantasia']);
+		$linklojista = $lojista;
 	
 ?>
 <?php require_once('skin/section.phtml'); ?>
@@ -51,7 +54,7 @@ if(isset($perfilLojistaOfertas) && $subaction == $perfilLojistaOfertas){
     <div class="container">
         <div class="area inicial">
         
-            <div class="row">
+            <div class="row" itemscope itemtype="http://data-vocabulary.org/Product">
 				<?php
                 if($totalRowsOfertas <=0){
 						
@@ -60,14 +63,14 @@ if(isset($perfilLojistaOfertas) && $subaction == $perfilLojistaOfertas){
 				}else{
                 ?>
              
-                <div class="col-xs-12 col-sm-6 col-md-8">
+                <div class="col-md-8" style="padding-top:20px" itemprop="image">
                 	<img src="<?php baseurl(IMGOFERTAS. $OfertaRows['img']);?>" alt="<?php echo $OfertaRows['titulo']; ?>" class="img-thumbnail" style="max-height:479px;" width="100%">
                 </div>
-                <div class="col-xs-6 col-md-4" align="left">
-                	<h3 class="page-header"> <span class="glyphicon glyphicon-bookmark icon-destaque"></span><?php echo $OfertaRows['titulo']; ?></h3>
-                    <p><strong>Valor:</strong> <?php echo $OfertaRows['valor']; ?></p>
-                    <p><strong>Descrição: </strong><?php $descriccao = new texto($OfertaRows['descricao']); ?></p>
-                    <p><strong>Loja:</strong> <?php echo $OfertaRows['nomeFantasia']; ?></p>
+                <div class="col-md-4" align="left">
+                	<h3 class="page-header" itemprop="name"> <span class="glyphicon glyphicon-bookmark icon-destaque"></span><?php echo $OfertaRows['titulo']; ?></h3>
+                    <p itemprop="price"><strong>Valor:</strong> <?php echo $OfertaRows['valor']; ?></p>
+                    <p itemprop="description"><strong>Descrição: </strong><?php $descriccao = new texto($OfertaRows['descricao']); ?></p>
+                    <p itemprop="brand"><strong>Nossa loja OferApp:</strong> <a href="<?php baseurl($linklojista); ?>"><?php echo $OfertaRows['nomeFantasia']; ?></a></p>
                     <p><strong>Tipo:</strong> <?php if($OfertaRows['tipo'] == 'serviço'){ echo 'Serviços';}else{echo 'Produtos';} ?></p>
                     <p><a href="#encontrenos" class="label label-default" style="font-size:14px">Encontre-nos!</a></p>
                     <?php
@@ -78,7 +81,7 @@ if(isset($perfilLojistaOfertas) && $subaction == $perfilLojistaOfertas){
 							$result_Soli = mysqli_query($dboferapp, $soli_Query);
 							$rowSoli = mysqli_num_rows($result_Soli);
 							if($rowSoli>0){
-								echo '<div class="alert alert-success" role="alert">Oferta Solicitada com sucesso!</div>';
+								echo '<div class="alert alert-success" role="alert"><strong>Oferta Solicitada com sucesso!</strong></div>';
 							}else{
 					?>
                     <p>
@@ -96,8 +99,10 @@ if(isset($perfilLojistaOfertas) && $subaction == $perfilLojistaOfertas){
                             <p align="center" class="label label-warning" style="font-size:14px"> Oferta esgotada!</p>
                             <?php
 						}
-					}
+					}else{
 					?>
+                    <div class="alert alert-success" role="alert"><strong>Faça login para solicitar esta oferta!</strong></div>
+                    <?php }?>
                     <h5 class="page-header"><strong>Nosso Endereço </strong></h5>
                     <p id="endereco"><?php echo $OfertaRows['endereco']; ?> - <?php echo $OfertaRows['bairro']; ?>, <?php echo $OfertaRows['cidade']; ?> - <?php echo $OfertaRows['sigla']; ?></p>
                 </div>

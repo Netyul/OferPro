@@ -12,7 +12,7 @@ if(!isset($pagina) || $pagina ==''){
 <section class="oa-principal">
 	<div class="container">
     	<div class="row">
-        	<div class="col-md-8">
+        	<div class="col-md-12">
             	<div class="Slogan">
 					<h1 class="lead">As ofertas mais pr&oacute;ximas em suas m&atilde;os</h1>
                     
@@ -33,9 +33,9 @@ else{
 ?>
 <section>
 	<div class="container">
-    
-        <ol class="breadcrumb">
-            <li><a href="<?php echo BASEURL; ?>">Home</a></li>
+    <div class="pull-right">
+        <ol class="breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" style="background-color:#0A6340; color:#FFF">
+            <li><a href="<?php echo BASEURL; ?>" itemprop="url">Home</a></li>
             <?php
                 if(isset($pagina)){
                     if($action ==''){
@@ -46,7 +46,7 @@ else{
                     }
                     else{
             ?>
-                        <li><a href="<?php baseurl($pagina);?>"><?php echo $pagina; ?></a></li>
+                        <li><a href="<?php baseurl($pagina);?>" itemprop="url"><?php echo $pagina; ?></a></li>
             <?php
                     }
                 }
@@ -58,7 +58,7 @@ else{
                 }
 				else{
             ?>
-             <li><a href="<?php baseurl($pagina.'/'.$action);?>"><?php echo $action; ?></a></li>
+             <li><a href="<?php baseurl($pagina.'/'.$action);?>" itemprop="url"><?php echo $action; ?></a></li>
             <?php 
 				}
 			}
@@ -67,7 +67,7 @@ else{
              <li class="active"><?php echo $subaction; ?></li>
              <?php } ?>
         </ol>
-    
+    </div>
     </div>
 </section>
 <?php 

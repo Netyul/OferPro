@@ -45,8 +45,8 @@ if(isset($_POST['cancelarNotificacao']) && $_POST['cancelarNotificacao'] == 'can
 				}
 				?>
                 <div class=" col-md-9" style="text-align: center; border-right:1px #CCC solid;">
-                	<ul class="nav nav-tabs nav-justified" role="tablist"  id="myTab">
-                    	<li class="active"><a href="#tabloides" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_01.png'); ?>" width="39"> Tabloides</a></li>
+                	<ul class="nav nav-tabs nav-justified" role="tablist"  id="myTab" style=" border-bottom:1px #CCC solid; margin-bottom:5px">
+                    	<li class="active"><a href="#tabloides" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_01.png'); ?>" width="39"> Tablóides</a></li>
                     	<li><a href="#ofertas" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_04.png'); ?>" width="39"> Ofertas</a></li>
                         <li><a href="#presentes" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_03.png'); ?>" width="39"> Presentes</a></li>
                     </ul>

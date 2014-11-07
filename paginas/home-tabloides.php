@@ -13,9 +13,11 @@ $totalRows = mysqli_num_rows($resultTabloide);
 <ul class="row">
 	<?php 
 	if($totalRows <=0){
-			echo '<div class="alert alert-warning" role="alert">Nenhum tabloide cadastrado!</div>';
+			echo '<div class="alert alert-warning" role="alert">Nenhum tablóide cadastrado!</div>';
 		}
     while($tabloideRows = mysqli_fetch_array($resultTabloide)){
+		$lojista = str_replace(" ","-", $tabloideRows['nomeFantasia']);
+		$linkOferta = $lojista;
     ?>
     <li class="col-md-3 ">
         <div class="well well-sm">
@@ -36,7 +38,7 @@ $totalRows = mysqli_num_rows($resultTabloide);
                         <h4 class="modal-title" id="myModalLabel"><?php echo $tabloideRows['titulo'];?> </h4>
                     </div>
                     <div class="modal-body">
-                     <a href="<?php echo $tabloideRows['nomeFantasia'];?>" class="thumbnail">
+                     <a href="<?php echo $linkOferta;?>" class="thumbnail">
                      	<img src="<?php baseurl(IMGTABLOIDE. $tabloideRows['img']);?>" alt="<?php echo $tabloideRows['titulo'];?>" style="width:100%;">
                      </a>
                      <p align="left"><?php echo $tabloideRows['descricao'];?></p>

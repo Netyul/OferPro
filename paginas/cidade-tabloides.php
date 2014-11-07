@@ -7,24 +7,20 @@
  */
  
 $cidade = explode("-", $catCidade);
-$selectCidede = "SELECT * FROM cidade WHERE nome = '".$cidade[0]."'";
-$resultCidade = mysqli_query($dboferapp, $selectCidede);
-$cidadeRow = mysqli_fetch_array($resultCidade);
-//caputurar lojista por cidade no banco de dados
-$lojistaCidade = "SELECT * FROM lojista WHERE cidade = ".$cidadeRow['id'];
-$resultLojistaCidade = mysqli_query($dboferapp, $lojistaCidade);
- ?>
+
+?>
 <ul class="row">
 	<?php 
-    while($lojistaCidadeRows = mysqli_fetch_array($resultLojistaCidade)){
 		
-		$frontCidade_query = "SELECT * FROM tabloide WHERE id_lojista = ".$lojistaCidadeRows['id']." ORDER BY id DESC";
+		$frontCidade_query = "SELECT t.id, t.titulo, t.img, t.descricao, l.nomeFantasia, c.nome AS nomeCidade FROM cidade AS c INNER JOIN lojista AS l ON c.id = l.cidade INNER JOIN tabloide AS t ON l.id = t.id_lojista WHERE c.nome = '".$cidade[0]."' ORDER BY id DESC";
 		$frontCidade = mysqli_query($dboferapp, $frontCidade_query);
 		$totalRows = mysqli_num_rows($frontCidade);
 		if($totalRows <=0){
-			echo '<div class="alert alert-warning" role="alert">Nenhum tabloide cadastrado para essa cidade!</div>';
+			echo '<div class="alert alert-warning" role="alert">Nenhum tablóide cadastrado para essa cidade!</div>';
 		}
 		while($frontCidadeRows = mysqli_fetch_array($frontCidade)){
+			$lojista = str_replace(" ","-", $frontCidadeRows['nomeFantasia']);
+			$linkOferta = $lojista;
     ?>
     <li class="col-md-3 ">
         <div class="well well-sm">
@@ -45,7 +41,10 @@ $resultLojistaCidade = mysqli_query($dboferapp, $lojistaCidade);
                         <h4 class="modal-title" id="myModalLabel"><?php echo $frontCidadeRows['titulo'];?> </h4>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <a href="<?php echo $lojista;?>" class="thumbnail">
+                        <img src="<?php baseurl(IMGTABLOIDE. $frontCidadeRows['img']);?>" alt="<?php echo $tabloideRows['titulo'];?>" style="width:100%;">
+                        </a>
+                        <p align="left"><?php echo $frontCidadeRows['descricao'];?></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -54,5 +53,5 @@ $resultLojistaCidade = mysqli_query($dboferapp, $lojistaCidade);
   			</div>
 		</div>
     </li>
-    <?php }}?>
+    <?php }?>
 </ul>

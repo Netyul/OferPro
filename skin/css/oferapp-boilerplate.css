@@ -56,7 +56,7 @@ body { margin: 0; font-size: 1em; line-height: 1.4; }
    ========================================================================== */
 
 a { color: #00e; }
-a:visited { color: #fff; }
+a:visited { color: #00e; }
 a:hover { color: #06e; }
 a:focus { outline: thin dotted; }
 
@@ -285,15 +285,15 @@ section{
 	
 }
 .breadcrumb li a{
-	color:#333;
+	color:#fff;
 }
 
 .breadcrumb>li+li:before {
-color: #333;
+color: #fff;
 
 }
 .breadcrumb>.active {
-	color: #333;
+	color: #fff;
 }
 .img-section{
 	text-align:left;
@@ -321,7 +321,7 @@ box-shadow: 0 0 10px #999;
 background: #fff;
 }
 .area{
-	padding-top:3px;
+	padding-top:0px;
 	background: #fff;
 	border-bottom: 1px solid #e9e9e9;
 	margin-left:0;
@@ -341,7 +341,7 @@ background: #fff;
 .principal{
 	margin-top: 0px;
 	border-radius: 5px 5px 0 0;
-	text-align:center;
+	text-align: left;
 	
 }
 .inicial h1{
@@ -352,7 +352,7 @@ background: #fff;
 	top:2px;
 }
 .btn-Oferapp {
-color: #fff;
+color: #fff !important;
 background-color: rgb(191,217,104);
 background-repeat: repeat-x;
 border-color: rgb(0,168,89);
@@ -379,13 +379,13 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
 .Slogan{
 	color:#fff;
 	
+	
 }
 .Slogan h1{
-	
 	font-style: normal;
-	text-shadow: 2px 0px 2px #ffffff;
-	color:	#000;
-	font-weight:bold;
+	text-shadow: 5px 0px 5px #000;
+	color:	#84E327;
+	font-weight: bold;
 	}
 .nav-tabs>li>a {
 	text-align:left;
@@ -397,10 +397,16 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
 
 .inicial .top{
 	border-bottom: 1px solid #eee;
-	margin-top: 5px;
+	margin-top: 0px;
 	margin-bottom: 25px;
 	margin-left:0;
 	margin-right:0;
+}
+.top{
+	background-color:#BAD8B8;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	border-bottom: 1px solid #ddd;
 }
 .top h2{
 	font-weight:bold;
@@ -441,7 +447,8 @@ transition: opacity 300ms;
 	word-wrap: break-word; 
 	 height:110px; 
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
+	text-align:justify;
 }
 .thumbnail{
 	margin-bottom: 2px;
@@ -517,7 +524,15 @@ text-align:left;
 .inicial row ul{
 	margin-bottom: 20px;
 }
-
+.quem-somos{
+	background-image: url(../images/Ofermarca.png);
+	background-position:center;
+	background-repeat:no-repeat;
+	
+}
+.quem-somos p{
+	color:#666;
+}
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.
    ========================================================================== */

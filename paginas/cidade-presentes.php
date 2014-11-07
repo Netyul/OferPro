@@ -7,18 +7,12 @@
  */
 			
 $cidade = explode("-", $catCidade);
-$selectCidede = "SELECT * FROM cidade WHERE nome = '".$cidade[0]."'";
-$resultCidade = mysqli_query($dboferapp, $selectCidede);
-$cidadeRow = mysqli_fetch_array($resultCidade);
-//caputurar lojista por cidade no banco de dados
-$lojistaCidade = "SELECT * FROM lojista WHERE cidade = ".$cidadeRow['id'];
-$resultLojistaCidade = mysqli_query($dboferapp, $lojistaCidade);
+
 ?>
 <ul class="row">
 	<?php 
-     while($lojistaCidadeRows = mysqli_fetch_array($resultLojistaCidade)){
-		
-		$frontCidade_query = "SELECT * FROM presentes WHERE id_lojista = ".$lojistaCidadeRows['id']." ORDER BY id DESC";
+	
+		$frontCidade_query = "SELECT p.id, p.titulo, p.img, p.descricao, l.nomeFantasia, c.nome AS nomeCidade FROM cidade AS c INNER JOIN lojista AS l ON c.id = l.cidade INNER JOIN presentes AS p ON l.id = p.id_lojista WHERE c.nome = '".$cidade[0]."' ORDER BY id DESC";
 		$frontCidade = mysqli_query($dboferapp, $frontCidade_query);
 		$totalRows = mysqli_num_rows($frontCidade);
 		if($totalRows <=0){
@@ -26,8 +20,8 @@ $resultLojistaCidade = mysqli_query($dboferapp, $lojistaCidade);
 		}
 		while($frontCidadeRows = mysqli_fetch_array($frontCidade)){
 			$Presentes = str_replace(" ","-", $frontCidadeRows['titulo']);
-			$lojista = str_replace(" ","-", $lojistaCidadeRows['nomeFantasia']);
-			$linkOferta = $lojista.'/presentes/'.$Presentes;
+			$lojista = str_replace(" ","-", $frontCidadeRows['nomeFantasia']);
+			$linkPresentes = $lojista.'/presentes/'.$Presentes;
     ?>
     <li class="col-md-3 ">
         <div class="well well-sm">
@@ -41,6 +35,6 @@ $resultLojistaCidade = mysqli_query($dboferapp, $lojistaCidade);
             </div>
         </div>
     </li>
-    <?php }}?>
+    <?php }?>
 
 </ul> 

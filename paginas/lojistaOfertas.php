@@ -35,7 +35,7 @@ elseif(isset($pagina) && isset($action) && $action == 'ofertas' && empty($subact
     <div class="container">
         <div class="area inicial">
             <div class="top page-header">
-            	<h2>  <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Ofertas da loja <?php echo $rows_lojista['nomeFantasia']; ?></h2>
+            	<h2>  <span class="glyphicon glyphicon-bookmark icon-destaque"></span> Ofertas da loja <?php echo $rows_lojista['nomeFantasia']; ?></h2>
             
             </div>
             <ul class="row">

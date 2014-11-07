@@ -44,7 +44,7 @@
 							}
 						}
 						else{
-						echo'<div class="alert alert-warning" role="alert">A senha Não Confere!</div>';
+						echo'<div class="alert alert-warning" role="alert">A senha não confere!</div>';
 						}
 						
 					}
@@ -74,8 +74,8 @@
                 </div>
                 <div class="col-md-3">
                 	<ul class="nav nav-pills nav-stacked">
-                    	<li class="active"><a href="<?php baseurl('usuario/perfil');?>">Editar perfil</a></li>
-                    	<li><a href="<?php baseurl('usuario/configurar-acesso');?>">Configurações de acesso</a></li>
+                    	<li><a href="<?php baseurl('usuario/perfil');?>">Editar perfil</a></li>
+                    	<li class="active"><a href="<?php baseurl('usuario/configurar-acesso');?>">Configurações de acesso</a></li>
                         <li><a href="<?php baseurl('usuario/notificar');?>">Notificações</a></li>
                     	<li><a href="<?php baseurl('usuario/minhas-ofertas');?>">Minhas Ofertas</a></li>
                         <li><a href="<?php baseurl('usuario/meus-presentes');?>">Meus Presentes</a></li>

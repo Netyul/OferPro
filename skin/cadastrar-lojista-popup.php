@@ -6,13 +6,20 @@
 * Arquivo de cadastro do usuario do sistema oferapp
 * Versão: 1.0
 */
+
 if(isset($_POST['submit']) && isset($_POST['termos']) && $_POST['submit'] == 'cadastrarLojista' && $_POST['termos'] == true){
+$query_contato = "SELECT * FROM admin WHERE nome = 'Root'";
+$resultado_contato = mysqli_query($dboferapp, $query_contato);
+$email_row = mysqli_fetch_assoc($resultado_contato);
+$row_emaildb = mysqli_fetch_array($resultado_contato);
+$row_totalRows = mysqli_num_rows($resultado_contato);
+
 $nomeEmpresa       = $_POST['nomeEmpresa'];
 $cpf               = $_POST['cpf'];
 $cnpj               = $_POST['cnpj'];
 $nomeResponsavel   = $_POST['nomeResponsavel'];
 $emailremetente    = trim($_POST['emailLojista']);
-$emaildestinatario = 'jefteamorim@gmail.com'; // Digite seu e-mail aqui, lembrando que o e-mail deve estar em seu servidor web
+$emaildestinatario = 'jefteamorim@gmail.com, '. $row_emaildb['email']; // Digite seu e-mail aqui, lembrando que o e-mail deve estar em seu servidor web
 $celular     	   = $_POST['celularLojista'];
 $telefone      	   = $_POST['telefoneLojista'];
 $cidadeLojista     = $_POST['cidadeLojista'];
@@ -40,10 +47,10 @@ $headers .= "Return-Path: $emaildestinatario \r\n"; // return-path
 $envio = mail($emaildestinatario, $assunto, $mensagemHTML, $headers); 
  
  if($envio){
-	$msglsuccess ='<div class="alert alert-success" role="alert">cadastro efetuado com sucesso! Um dos nosso opradores entrara em contato com você.</div>'; // Página que será redirecionada
+	$msglsuccess2 ='<div class="alert alert-success" role="alert">cadastro efetuado com sucesso! Um dos nosso opradores entrara em contato com você.</div>'; // Página que será redirecionada
  }
 }
-if(isset($msglsuccess)){ 
+if(isset($msglsuccess2)){ 
  	
  	echo '<script type="text/javascript">$(window).load(function() {
         $("#modalLojista").click();
@@ -63,7 +70,7 @@ if(isset($msglsuccess)){
                 <div class="modal-body">
                 <?php 
                 if(isset($msglsuccess)){
-						echo $msglsuccess;
+						echo $msglsuccess2;
 						
 				}
 					else{	
@@ -85,7 +92,7 @@ if(isset($msglsuccess)){
                             <input class="form-control" title="Digite um CPF valido exemplo 111.111.111-11" placeholder="Digite seu CPF!" type="text" name="cpf" pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$" required />
                           </div>
                           </div>
-                          <div class="form-group" id="cnpj" style="display:none">
+                          <div class="form-group">
                             <label class="col-sm-4 control-label">CNPJ:</label>
                             <div class="col-sm-5">
                             <input type="text" class="form-control" name="cnpj" placeholder="Digite o CNPJ!" title="Digite um CNPJ valido exemplo 11.111.111/0001-01" >
@@ -169,8 +176,8 @@ if(isset($msglsuccess)){
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                <label>
-                                	<input type="checkbox" name="termos" id="termos" required/> <a href="termos">Eu concordo com os termos</a>                                </label>
+                                <label>Leia os termos clicando no link abaixo.<br />
+                                	<input type="checkbox" name="termos" id="termos" required/> <a href="#termos-de-uso" data-toggle="modal">Eu concordo com os termos</a>                                </label>
                                 </div>
                             </div>
                     	</div>

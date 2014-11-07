@@ -37,7 +37,7 @@ $lembrarAdmin = (isset($_COOKIE['lembrarAdmin']) && $_COOKIE['lembrarAdmin'] != 
  $login   = isset($arr[1]) ? base64_decode($arr[1]) : '';
  $senha   = isset($arr[2]) ? base64_decode($arr[2]) : '';
  
- $urlpost =  $_SERVER['HTTP_HOST'].'/admin';
+ $urlpost =  $_SERVER['HTTP_HOST'].'/admin/lojista/';
  
  if(isset($_POST['enviar'])){
 	 

@@ -12,7 +12,7 @@
  $login   = isset($arr[1]) ? base64_decode($arr[1]) : '';
  $senha   = isset($arr[2]) ? base64_decode($arr[2]) : '';
  
- $urlpost =  $_SERVER['HTTP_HOST'];
+ $urlpost =  $_SERVER['HTTP_HOST'].'/usuario/notificar';
  if(isset($_POST['enviar'])){
 	 
 	 $input['login']   = mysqli_real_escape_string($dboferapp, trim($_POST['login']));

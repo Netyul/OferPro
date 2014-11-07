@@ -110,6 +110,30 @@ mark{background-color:#0A6340; color:#fff;}
 margin-bottom: 5px;
 text-align: left;
 }
+footer .row .col-lg-4 h4{
+	text-align:left;
+	padding-left:10px;
+}
+.form-horizontal .control-label {
+padding-top: 7px;
+margin-bottom: 0;
+text-align: right;
+}
+.top h2{
+	text-align:left;
+	padding-top:10px; 
+	padding-left: 20px;
+}
+#file-original{
+	margin:0px;
+	padding:0px;
+    font-size:18px;
+	width:0px;
+	height: 0px;
+}
+breadcrumb li a {
+color: #fff;
+}
 /* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
 
 @media only screen and (min-width: 481px){
@@ -124,6 +148,7 @@ text-align: left;
 }
 #div1 {
 }
+
 .zeroMargin_tablet {
     margin-left: 0;
 }
@@ -139,15 +164,21 @@ text-align: left;
 .top #cadastrolojista{
 	text-align: center;
 }
-.top h2{
-	text-align:center;
-}
 .img-section{
 	margin-top: 15px;
 }
 .nav-tabs.nav-justified>li>a {
 margin-bottom: 5px;
 text-align: left;
+}
+footer .row .col-lg-4 h4{
+	text-align:left;
+	padding-left:10px;
+}
+.top h2{
+	text-align:left;
+	padding-top:10px; 
+	padding-left: 20px;
 }
 }
 
@@ -186,17 +217,17 @@ text-align: left;
     display: none;
 }
 .Slogan{
-	text-align:left;
+	text-align: center;
 	margin-top: 60px;
-	margin-left: 40px;
-	margin-right: 40px;
+	
 }
 .Slogan h1{
 	font-size:24px;
+	
 }
 .top{
-	padding-left:10px;
-	padding-right: 10px;
+	padding-left:0px;
+	padding-right: 0px;
 }
 .modal-dialog {
 
@@ -207,13 +238,17 @@ margin: 80px auto;
 }
 .top h2{
 	text-align:left;
+	padding-top:10px; 
+	padding-left: 20px;
 }
 .img-section{
 	margin-top: 238px;
 	margin-left:35px;
 }
 .Slogan{
-	margin-top: 190px;
+	margin-top: 60px;
+	text-align:center;
+	
 }
 .Slogan h1{
 	font-size:30px;
@@ -221,5 +256,28 @@ margin: 80px auto;
 .nav-tabs.nav-justified>li>a {
 margin-bottom: 5px;
 text-align: center;
+}
+.parceiros{
+	text-align:right;
+}
+.social{
+	text-align:center;
+	margin:0 auto;
+
+}
+footer .row .col-lg-4 h4{
+	text-align: center;
+}
+.nav-tabs.nav-justified>li>a {
+margin-bottom: 0px;
+text-align: center;
+
+}
+.nav-tabs.nav-justified>li>a {
+border-bottom: 0px solid #ddd;
+border-radius: 4px 4px 0 0;
+}
+.principal{
+	text-align:center;
 }
 }

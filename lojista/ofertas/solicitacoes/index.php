@@ -76,7 +76,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $queryString_solicitacoes = sprintf("&totalRows_solicitacoes=%d%s", $totalRows_solicitacoes, $queryString_solicitacoes);
 ?>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
 <!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
 <!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
@@ -88,6 +88,7 @@ $queryString_solicitacoes = sprintf("&totalRows_solicitacoes=%d%s", $totalRows_s
 <!-- InstanceBeginEditable name="doctitle" -->
 <title><?php echo htmlentities('OferApp Lojista Solicitações', ENT_COMPAT, 'utf-8'); ?></title>
 <!-- InstanceEndEditable -->
+<link href="../../../skin/images/favicon.png" rel="icon" type="image/x-icon"/>
 <link href="../../../admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../../../admin/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 <link href="../../../admin/css/oferapp.css" rel="stylesheet" type="text/css" />
@@ -101,6 +102,14 @@ $queryString_solicitacoes = sprintf("&totalRows_solicitacoes=%d%s", $totalRows_s
 <script src="../../../skin/js/respond.min.js"></script>
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
+<?php
+mysql_select_db($database_dboferapp, $dboferapp);
+$query_RSsolicitar = "SELECT * FROM solicitacoes WHERE vendido = 'not'";
+$RSsolicitar = mysql_query($query_RSsolicitar, $dboferapp) or die(mysql_error());
+$row_RSsolicitar = mysql_fetch_assoc($RSsolicitar);
+$totalRows_RSsolicitar = mysql_num_rows($RSsolicitar);
+?>
+
 </head>
 
 <body>
@@ -117,17 +126,20 @@ $queryString_solicitacoes = sprintf("&totalRows_solicitacoes=%d%s", $totalRows_s
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo BASEURL; ?>/lojista"><img  src="../../../admin/images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
+                <a class="navbar-brand" href="<?php echo BASEURL; ?>/lojista/ofertas"><img  src="../../../admin/images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            	 <ul class="nav navbar-nav">
+                    <li><a href="../../../lojista/"  style=""><img src="../../../skin/images/estatisticas.jpg" width="39"> Ofer Estatísticas</a></li>                    
+                  </ul>
                 <ul class="nav navbar-nav navbar-right">
                 	
-                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas" title="Ofertas" ><img src="../../../skin/images/icon_menu_navegacao_usuario_01.png" class=" pull-left" width="39"> Ofertas</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides" title="Tabloides"><img src="../../../skin/images/icon_menu_navegacao_usuario_04.png" class=" pull-left" width="39"> Tabloides</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes" title="Presentes"><img src="../../../skin/images/icon_menu_navegacao_usuario_03.png" width="39" class=" pull-left"> Presentes</a></li>
+                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas" title="Ofertas" ><img src="../../../skin/images/icon_menu_navegacao_usuario_01.png" width="39"> Ofertas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides" title="Tabloides"><img src="../../../skin/images/icon_menu_navegacao_usuario_04.png" width="39"> Tablóides</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes" title="Presentes"><img src="../../../skin/images/icon_menu_navegacao_usuario_03.png" width="39"> Presentes</a></li>
                     <li class="dropdown ">
-                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo LNOME; ?> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown" style="padding-top: 17px !important; padding-bottom: 16px !important;"><span class="glyphicon glyphicon-user"></span> <?php echo LNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                         	<li><a href="<?php echo BASEURL; ?>/lojista/perfil">Perfil</a></li>
                             <li><a href="<?php echo BASEURL; ?>/lojista/logout">sair</a></li>
@@ -148,14 +160,14 @@ $queryString_solicitacoes = sprintf("&totalRows_solicitacoes=%d%s", $totalRows_s
             <?php 
 				
 			?>
-            <h2> <span class="glyphicon glyphicon-send"></span> <?php echo htmlentities('Solicitações', ENT_COMPAT, 'utf-8'); ?></h2>
+            <h2> <span class="glyphicon glyphicon-send"></span> Solicitações</h2>
             <?php ?>
             <!-- InstanceEndEditable -->
                     </div>
-                    <div class="col-md-6" align="right">
-                        <ul class="nav nav-pills pull-right">
+                    <div class="col-md-6">
+                        <ul class="nav nav-pills align" style="margin-top:0px;">
                           <li class="active"><a href="../solicitacoes/">Solicitações <?php if($totalRows_RSsolicitar < 0){echo '<span class="badge pull-right">'.$totalRows_RSsolicitar.'</span>';} ?></a></li>
-                          <li><a href="#">vendidos</a></li>
+                          <li><a href="solicitacoes-vendidas.php">vendidos</a></li>
                           
                         </ul>
                     </div>
@@ -163,9 +175,7 @@ $queryString_solicitacoes = sprintf("&totalRows_solicitacoes=%d%s", $totalRows_s
             </div>
             <div class="row">
             <!-- InstanceBeginEditable name="conteudo" -->
-            <div class="col-md-12" style="padding:5px;" align="right">
-            	<a href="solicitacoes-vendidas.php" class="btn btn-default">Vendidos</a>
-            </div>
+           
             <div class="col-md-12">
             <?php
 			   			if(isset($_GET['action'])){
@@ -182,7 +192,7 @@ $queryString_solicitacoes = sprintf("&totalRows_solicitacoes=%d%s", $totalRows_s
             </div>
               <div class="col-md-12">
               	<div class="panel panel-default">
-                	<div class="panel-heading">
+                	<div class="panel-heading" align="left">
                     	<?php echo htmlentities('Solicitações da Loja:', ENT_COMPAT, 'utf-8'); ?> <?php echo $row_solicitacoes['nomeFantasia']; ?>
                     </div>
                     <div class="panel-body">
@@ -194,7 +204,7 @@ $queryString_solicitacoes = sprintf("&totalRows_solicitacoes=%d%s", $totalRows_s
                             </tr>
                             <?php if($totalRows_solicitacoes == 0){?>
                             <tr>
-                            <td colspan="3"><?php echo htmlentities('Nenhuma Solicitação Efetuada', ENT_COMPAT, 'utf-8'); ?></td>
+                            <td colspan="3" align="left"><?php echo htmlentities('Nenhuma Solicitação Efetuada', ENT_COMPAT, 'utf-8'); ?></td>
                             </tr>
                             <?php } else{do { ?>
                             <tr>
@@ -235,11 +245,9 @@ $queryString_solicitacoes = sprintf("&totalRows_solicitacoes=%d%s", $totalRows_s
                     </div>
                     <div class="panel-footer">
                     	<ul class="pagination">
-                        	<li><a href="<?php printf("%s?pageNum_solicitacoes=%d%s", $currentPage, 0, $queryString_solicitacoes); ?>"><span class="glyphicon glyphicon-backward"></span></a></li>
-                            <li><a href="<?php printf("%s?pageNum_solicitacoes=%d%s", $currentPage, max(0, $pageNum_solicitacoes - 1), $queryString_solicitacoes); ?>"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                        	<li><a href="<?php printf("%s?pageNum_solicitacoes=%d%s", $currentPage, max(0, $pageNum_solicitacoes - 1), $queryString_solicitacoes); ?>"><span class="glyphicon glyphicon-step-backward"></span></a></li>
                             <li><a> Registros <?php echo ($startRow_solicitacoes + 1) ?> a <?php echo min($startRow_solicitacoes + $maxRows_solicitacoes, $totalRows_solicitacoes) ?> de <?php echo $totalRows_solicitacoes ?> </a></li>
                             <li><a href="<?php printf("%s?pageNum_solicitacoes=%d%s", $currentPage, min($totalPages_solicitacoes, $pageNum_solicitacoes + 1), $queryString_solicitacoes); ?>"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-                            <li><a href="<?php printf("%s?pageNum_solicitacoes=%d%s", $currentPage, $totalPages_solicitacoes, $queryString_solicitacoes); ?>"><span class="glyphicon glyphicon-forward" ></span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -249,7 +257,11 @@ $queryString_solicitacoes = sprintf("&totalRows_solicitacoes=%d%s", $totalRows_s
         </div>
     </div>
 </main>
+<?php
+mysql_free_result($RSsolicitar);
+?>
 <footer>
+
 <!-- InstanceBeginEditable name="footer" -->
  <div class="footer"></div>
 

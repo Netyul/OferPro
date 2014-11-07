@@ -18,7 +18,7 @@ require_once('skin/section.phtml');
         <div class="top">
             <ul class="nav nav-tabs nav-justified" role="tablist"  id="myTab">
             	<li class="active"><a href="#ofertas" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_01.png'); ?>" width="39">Ofertas em Destaques </a></li>
-                <li><a href="#tabloides" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_04.png'); ?>" width="39"> Tabloides em Destaques </a></li>
+                <li><a href="#tabloides" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_04.png'); ?>" width="39"> Tablóides em Destaques </a></li>
                 <li><a href="#presentes" role="tab" data-toggle="tab"><img src="<?php baseurl('skin/images/icon_menu_navegacao_usuario_03.png'); ?>" width="39"> Ganhar Presentes</a></li>
             </ul>            
         </div>

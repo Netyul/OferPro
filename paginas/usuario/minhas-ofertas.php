@@ -33,7 +33,7 @@
                             <?php
 							$totalrows_minhasOfertas = mysqli_num_rows($result_minhasOfertas);
 							if($totalrows_minhasOfertas == 0){
-								echo '<div class="alert alert-warning" role="alert">Não a solicitações de ofertas!</div>';
+								echo '<div class="alert alert-warning" role="alert">Não há solicitações de ofertas!</div>';
 							}
 							while($row_minhasOferta = mysqli_fetch_array($result_minhasOfertas)){
 							?>

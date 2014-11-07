@@ -117,6 +117,7 @@ $queryString_Cidade = sprintf("&totalRows_Cidade=%d%s", $totalRows_Cidade, $quer
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Administração da OferApp</title>
 <!-- InstanceEndEditable -->
+<link href="../../skin/images/favicon.png" rel="icon" type="image/x-icon"/>
 <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 <link href="../css/oferapp.css" rel="stylesheet" type="text/css">
@@ -147,21 +148,43 @@ $queryString_Cidade = sprintf("&totalRows_Cidade=%d%s", $totalRows_Cidade, $quer
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo BASEURL; ?>"><img  src="../images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
+                <a class="navbar-brand" href="<?php echo BASEURL; ?>/admin/lojista/"><img  src="../images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            	<ul class="nav navbar-nav">
+                    <li><a href="../../admin/"><img src="../../skin/images/estatisticas.jpg" width="39"> Ofer Estatísticas (BR)</a></li>                    
+                  </ul>
                 <ul class="nav navbar-nav navbar-right">
                 	<?php 
 					$level = LEVEL;
 					if($level == 'superadmin'){
 					?>                 
-                    <li><a href="<?php echo BASEURL; ?>/admin/cidade">Cidades</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/admin/administradores">Administradores</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/cidade" style="padding-top: 17px !important; padding-bottom: 16px !important;">Cidades</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/administradores" style="padding-top: 17px !important; padding-bottom: 16px !important;">Administradores</a></li>
+                   <?php }else{
+						$colname_admin = "-1";
+						if (isset($_SESSION['admin_id'])) {
+						  $colname_admin = $_SESSION['admin_id'];
+						}
+						mysql_select_db($database_dboferapp, $dboferapp);
+						$query_admin = sprintf("SELECT a.id, c.nome, e.sigla FROM admin AS a INNER JOIN cidade AS c ON a.cidade = c.id INNER JOIN estado AS e ON c.id_uf = e.id WHERE a.id = %s", GetSQLValueString($colname_admin, "int"));
+						$admin = mysql_query($query_admin, $dboferapp) or die(mysql_error());
+						$row_admin = mysql_fetch_assoc($admin); 
+						$Ecidade =  $row_admin['nome'].'-'.$row_admin['sigla'];
+						$LinkCidade = str_replace(" ","-", $row_admin['nome']);
+						$link = $LinkCidade.'-'.$row_admin['sigla'];
+					?>
+                    <li>
+                    	<div class="btn-group btn-group-cidade" role="menuitem" style="padding: 13px">
+            				<a class="btn btn-default">Cidade: <?php echo $Ecidade; ?></a>
+            
+            			</div>
+                    </li>
                     <?php } ?>
-                    <li><a href="<?php echo BASEURL; ?>/admin/lojista">Lojistas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/lojista" style="padding-top: 17px !important; padding-bottom: 16px !important;">Meus Lojistas</a></li>
                     <li class="dropdown ">
-                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo ADMNOME; ?> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown" style="padding-top: 17px !important; padding-bottom: 16px !important;"><span class="glyphicon glyphicon-user"></span> <?php echo ADMNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="<?php echo BASEURL; ?>/admin/logout">sair</a></li>
                         </ul>
@@ -175,26 +198,26 @@ $queryString_Cidade = sprintf("&totalRows_Cidade=%d%s", $totalRows_Cidade, $quer
 <main>
     <div class="container">
         <div class="area principal">
-            <div class="top page-header">
+            <div class="top page-header" style="padding-left:17px">
             <!-- InstanceBeginEditable name="tituloPagina" -->
-            <h2> <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Administração</h2>
+            <h2><span class="glyphicon glyphicon-bookmark icon-destaque"></span> Administrar Cidade</h2>
             <!-- InstanceEndEditable -->
             </div>
             <div class="row">
             <!-- InstanceBeginEditable name="conteudo" -->
               <div class="col-md-4">
        			<div class="panel panel-default">
-                	<div class="panel-heading">Cidades</div>
+                	<div class="panel-heading" align="left">Cidades</div>
                     
                   <table class="table">
                         <?php if($totalRows_Cidade == 0){ ?>
                     <tr>
-                          <td colspan="3">Nunhuma Cidade cadastrado</td>
+                          <td colspan="3" align="left">Nunhuma Cidade cadastrado</td>
                     </tr>
 					    <?php }else{ ?>
                           <?php do { ?>
                         <tr>
-                              <td><?php echo $row_Cidade['nome']; ?> - <?php echo $row_Cidade['sigla']; ?></td>
+                              <td align="left"><?php echo $row_Cidade['nome']; ?> - <?php echo $row_Cidade['sigla']; ?></td>
                               <td width="8%"><a href="cidade-editar.php?id=<?php echo $row_Cidade['id']; ?>" class="editar" title="Editar "><span class="glyphicon glyphicon-pencil"></span></a></td>
                               <td width="8%"><a href="cidade-excluir.php?id=<?php echo $row_Cidade['id']; ?>" title="Excluir " class="excluir"><span class="glyphicon glyphicon-remove"></span></a></td>
                           </tr>
@@ -212,26 +235,26 @@ $queryString_Cidade = sprintf("&totalRows_Cidade=%d%s", $totalRows_Cidade, $quer
                       </div>
             </div>
               </div>
-              <div class="col-md-8" style=" text-align:center; padding:10px;">
+              
                           <?php
                           if(isset($_GET['action'])){
                               if($_GET['action'] == 'cadastrado'){
-                                  echo '<div class="alert alert-success" role="alert">Cidade Cadastrada!</div>';
+                                  echo '<div class="col-md-8" style=" text-align:center; padding:10px;"><div class="alert alert-success" role="alert">Cidade Cadastrada!</div></div>';
                               }
                               elseif($_GET['action'] == 'excluido'){
-                                  echo '<div class="alert alert-success" role="alert">Cidade Excluida!</div>';
+                                  echo '<div class="col-md-8" style=" text-align:center; padding:10px;"><div class="alert alert-success" role="alert">Cidade Excluida!</div></div>';
                               }
                               elseif($_GET['action'] == 'editado'){
-                                  echo '<div class="alert alert-success" role="alert">Cidade Editada!</div>';
+                                  echo '<div class="col-md-8" style=" text-align:center; padding:10px;"><div class="alert alert-success" role="alert">Cidade Editada!</div></div>';
                               }
                               
                           }
                           ?>
                           
-              </div>
+            
               <div class="col-md-8">
               	 <div class="panel panel-default">
-              	<div class="panel-heading">Cadastro de Administradores</div>
+              	<div class="panel-heading" align="left">Cadastro de Administradores</div>
                 <div class="panel-body">
 				<form method="post" action="<?php echo $editFormAction; ?>" class="form-horizontal" name="form1">
               <div class="form-group">
@@ -241,7 +264,7 @@ $queryString_Cidade = sprintf("&totalRows_Cidade=%d%s", $totalRows_Cidade, $quer
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-3 control-label">Email</label>
+                <label class="col-sm-3 control-label">Estado:</label>
                 <div class="col-sm-4">
                   <select name="estado" class="form-control">
                   <?php do { ?>

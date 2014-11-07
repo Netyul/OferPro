@@ -61,38 +61,62 @@ if (isset($_GET['totalRows_RsLojistas'])) {
 }
 $totalPages_RsLojistas = ceil($totalRows_RsLojistas/$maxRows_RsLojistas)-1;
 
+$colname_ofertas = "-1";
+if (isset($_SESSION['admin_id'])) {
+  $colname_ofertas = $_SESSION['admin_id'];
+}
 mysql_select_db($database_dboferapp, $dboferapp);
-$query_ofertas = "SELECT * FROM ofertas";
+$query_ofertas = sprintf("SELECT a.id, l.nomeFantasia, o.id AS id_ofertas FROM admin AS a INNER JOIN lojista AS l ON a.id = l.id_admin INNER JOIN ofertas AS o ON l.id = o.id_lojista WHERE a.id  = %s", GetSQLValueString($colname_ofertas, "int"));
 $ofertas = mysql_query($query_ofertas, $dboferapp) or die(mysql_error());
 $row_ofertas = mysql_fetch_assoc($ofertas);
 $totalRows_ofertas = mysql_num_rows($ofertas);
 
+$colname_presentes = "-1";
+if (isset($_SESSION['admin_id'])) {
+  $colname_presentes = $_SESSION['admin_id'];
+}
 mysql_select_db($database_dboferapp, $dboferapp);
-$query_presentes = "SELECT * FROM presentes";
+$query_presentes = sprintf("SELECT a.id, l.nomeFantasia, p.id AS id_presentes FROM admin AS a INNER JOIN lojista AS l ON a.id = l.id_admin INNER JOIN presentes AS p ON l.id = p.id_lojista WHERE a.id = %s", GetSQLValueString($colname_presentes, "int"));
 $presentes = mysql_query($query_presentes, $dboferapp) or die(mysql_error());
 $row_presentes = mysql_fetch_assoc($presentes);
 $totalRows_presentes = mysql_num_rows($presentes);
 
+$colname_tabloides = "-1";
+if (isset($_SESSION['admin_id'])) {
+  $colname_tabloides = $_SESSION['admin_id'];
+}
 mysql_select_db($database_dboferapp, $dboferapp);
-$query_tabloides = "SELECT * FROM tabloide";
+$query_tabloides = sprintf("SELECT a.id, l.nomeFantasia, t.id AS id_tabloide FROM admin AS a INNER JOIN lojista AS l ON a.id = l.id_admin INNER JOIN tabloide AS t ON l.id = t.id_lojista WHERE a.id = %s", GetSQLValueString($colname_tabloides, "int"));
 $tabloides = mysql_query($query_tabloides, $dboferapp) or die(mysql_error());
 $row_tabloides = mysql_fetch_assoc($tabloides);
 $totalRows_tabloides = mysql_num_rows($tabloides);
 
+$colname_solicitacoes = "-1";
+if (isset($_SESSION['admin_id'])) {
+  $colname_solicitacoes = $_SESSION['admin_id'];
+}
 mysql_select_db($database_dboferapp, $dboferapp);
-$query_solicitacoes = "SELECT * FROM solicitacoes";
+$query_solicitacoes = sprintf("SELECT a.id, l.nomeFantasia, s.id AS id_solicita, s.vendido FROM admin AS a INNER JOIN lojista AS l ON a.id = l.id_admin INNER JOIN solicitacoes AS s ON l.id = s.id_lojista WHERE s.vendido = 'not' AND a.id = %s", GetSQLValueString($colname_solicitacoes, "int"));
 $solicitacoes = mysql_query($query_solicitacoes, $dboferapp) or die(mysql_error());
 $row_solicitacoes = mysql_fetch_assoc($solicitacoes);
 $totalRows_solicitacoes = mysql_num_rows($solicitacoes);
 
+$colname_vendidos = "-1";
+if (isset($_SESSION['admin_id'])) {
+  $colname_vendidos = $_SESSION['admin_id'];
+}
 mysql_select_db($database_dboferapp, $dboferapp);
-$query_vendidos = "SELECT * FROM solicitacoes WHERE vendido = 'yes'";
+$query_vendidos = sprintf("SELECT a.id, l.nomeFantasia, s.id AS id_solicita, s.vendido FROM admin AS a INNER JOIN lojista AS l ON a.id = l.id_admin INNER JOIN solicitacoes AS s ON l.id = s.id_lojista WHERE s.vendido = 'yes' AND a.id = %s", GetSQLValueString($colname_vendidos, "int"));
 $vendidos = mysql_query($query_vendidos, $dboferapp) or die(mysql_error());
 $row_vendidos = mysql_fetch_assoc($vendidos);
 $totalRows_vendidos = mysql_num_rows($vendidos);
 
+$colname_concorrentes = "-1";
+if (isset($_SESSION['admin_id'])) {
+  $colname_concorrentes = $_SESSION['admin_id'];
+}
 mysql_select_db($database_dboferapp, $dboferapp);
-$query_concorrentes = "SELECT  SUM(cliks) FROM ganharpresente ORDER BY id ASC";
+$query_concorrentes = sprintf("SELECT a.id, SUM(g.cliks) FROM admin AS a INNER JOIN lojista AS l ON a.id = l.id_admin INNER JOIN presentes AS p ON l.id = p.id_lojista INNER JOIN ganharpresente AS g ON g.id_presente = p.id WHERE a.id = %s ORDER BY id ASC", GetSQLValueString($colname_concorrentes, "int"));
 $concorrentes = mysql_query($query_concorrentes, $dboferapp) or die(mysql_error());
 $row_concorrentes = mysql_fetch_assoc($concorrentes);
 $totalRows_concorrentes = mysql_num_rows($concorrentes);
@@ -154,6 +178,25 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   }
 }
 $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_adminLojista, $queryString_adminLojista);
+
+if(isset($_GET['desativar']) && $_GET['desativar']!= ''){
+	$updateSQL = sprintf("UPDATE lojista SET  statos=%s WHERE id=%s",
+                       GetSQLValueString('off', "text"),
+					   GetSQLValueString($_GET['desativar'], "int")
+					   );
+	mysql_select_db($database_dboferapp, $dboferapp);
+  	$Result1 = mysql_query($updateSQL, $dboferapp) or die(mysql_error());
+	header('Location: /admin/administradores/');
+}
+if(isset($_GET['ativar']) && $_GET['ativar']!= ''){
+	$updateSQL = sprintf("UPDATE lojista SET  statos=%s WHERE id=%s",
+                       GetSQLValueString('on', "text"),
+					   GetSQLValueString($_GET['ativar'], "int")
+					   );
+	mysql_select_db($database_dboferapp, $dboferapp);
+  	$Result1 = mysql_query($updateSQL, $dboferapp) or die(mysql_error());
+	header('Location: /admin/administradores/');
+}
 ?>
 <!doctype html>
 <!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
@@ -166,6 +209,7 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
 <meta name="author" content="Jefte Amorim da Costa">
 <meta name="generator" content="Netyul">
 <title>Administração da OferApp</title>
+<link href="../skin/images/favicon.png" rel="icon" type="image/x-icon"/>
 <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="../css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
 <link href="../css/oferapp.css" rel="stylesheet" type="text/css">
@@ -196,22 +240,44 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo BASEURL; ?>"><img  src="../images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
+                <a class="navbar-brand" href="<?php echo BASEURL; ?>/admin/lojista/"><img  src="../images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            	<ul class="nav navbar-nav">
+                    <li><a href="<?php echo BASEURL; ?>/admin/"><img src="../../skin/images/estatisticas.jpg" width="39"> Ofer Estatísticas (BR)</a></li>                    
+                  </ul>
                 <ul class="nav navbar-nav navbar-right">
                 	<?php 
 					$level = LEVEL;
 					if($level == 'superadmin'){
 					?>                 
-                    <li><a href="<?php echo BASEURL; ?>/admin/cidade">Cidades</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/admin/administradores">Administradores</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/cidade" style="padding-top: 17px !important; padding-bottom: 16px !important;">Cidades</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/administradores" style="padding-top: 17px !important; padding-bottom: 16px !important;">Administradores</a></li>
+                    <?php }else{
+						$colname_admin = "-1";
+						if (isset($_SESSION['admin_id'])) {
+						  $colname_admin = $_SESSION['admin_id'];
+						}
+						mysql_select_db($database_dboferapp, $dboferapp);
+						$query_admin = sprintf("SELECT a.id, c.nome, e.sigla FROM admin AS a INNER JOIN cidade AS c ON a.cidade = c.id INNER JOIN estado AS e ON c.id_uf = e.id WHERE a.id = %s", GetSQLValueString($colname_admin, "int"));
+						$admin = mysql_query($query_admin, $dboferapp) or die(mysql_error());
+						$row_admin = mysql_fetch_assoc($admin); 
+						$Ecidade =  $row_admin['nome'].'-'.$row_admin['sigla'];
+						$LinkCidade = str_replace(" ","-", $row_admin['nome']);
+						$link = $LinkCidade.'-'.$row_admin['sigla'];
+					?>
+                    <li>
+                    	<div class="btn-group btn-group-cidade" role="menuitem" style="padding: 13px">
+            				<a class="btn btn-default">Cidade: <?php echo $Ecidade; ?></a>
+            
+            			</div>
+                    </li>
                     <?php } ?>
-                    <li><a href="<?php echo BASEURL; ?>/admin/lojista">Lojistas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/lojista" style="padding-top: 17px !important; padding-bottom: 16px !important;">Meus Lojistas</a></li>
                     
                     <li class="dropdown ">
-                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo ADMNOME; ?> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown" style="padding-top: 17px !important; padding-bottom: 16px !important;"><span class="glyphicon glyphicon-user"></span> <?php echo ADMNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             
                             <li><a href="<?php echo BASEURL; ?>/admin/logout">sair</a></li>
@@ -227,61 +293,64 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
     <div class="container">
         <div class="area principal">
             <div class="top row">
-            <div class="col-md-6">
-            	<h2>  <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Administração Lojista</h2>
+            <div class="col-md-6" style="padding-left:0px">
+            	<h2 style="padding-left:0px"><span class="glyphicon glyphicon-bookmark icon-destaque"></span> Administrar Meus Lojista</h2>
             </div>
-            <div class="col-md-6" align="right">
+            <div class="col-md-6 align">
             	<a href="lojista-cadastrar.php" class="btn btn-primary">Novo Lojista</a>
             </div>
             </div>
             <div class="row">
             	<div class="col-md-4">
                 	<div class="panel panel-default">
-                        <div class="panel-heading">Lista de Clientes Lojistas</div>
+                        <div class="panel-heading" align="left">Lista de Clientes Lojistas</div>
                         <?php if($level == 'admin'){ ?>
                         <div class="panel-body">
-                            <table class="table">
-                              <tbody>
+                            
                                   <?php if ($totalRows_adminLojista == 0) { // Show if recordset empty ?>
-                                  <tr>
-                                  <td colspan="4">Não a nenhum lojista cadastardo</td>
-                                  </tr>
-                                  <?php } // Show if recordset empty ?>
-								  
+                                 
+                                  <p align="left">Não há nenhum lojista cadastardo</p>
+                                  
+                                  <?php }else{ // Show if recordset empty ?>
+								  <table class="table">
+                              		<tbody>
                                   <?php do { ?>
+                                  
                                     <tr>
-                                      <td width="16%">&nbsp;</td>
-                                      <td width="60%"><a href="ofertas.php?id=<?php echo $row_adminLojista['id'];?>" title="Editar Lojista" class="editar"><?php echo $row_adminLojista['nomeEmpresa']; ?></a></td>
-                                      <td width="8%"><a href="lojista-editar.php?id=<?php echo $row_adminLojista['id'];?>" title="Editar Lojista" class="editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                                      <td width="8%"><a href="lojista-excluir.php?id=<?php echo $row_adminLojista['id']; ?>" title="Excluir lojista" class="excluir"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                      <td width="13%"><?php if($row_adminLojista['statos'] == 'on'){ echo '<a href="?desativar='.$row_adminLojista['id'].'" class="btn btn-danger btn-xs" title="Desativar conta"><span class="glyphicon glyphicon-eye-close"></span></a>'; }else{ echo '<a href="?ativar='.$row_adminLojista['id'].'" class="btn btn-success btn-xs" title="Ativar conta"><span class="glyphicon glyphicon-eye-open"></span></a>';} ?></td>
+                                      <td width="67%" align="left"><a href="ofertas.php?id=<?php echo $row_adminLojista['id'];?>" title="Editar Lojista" class="editar"><?php echo $row_adminLojista['nomeEmpresa']; ?></a></td>
+                                      <td width="10%"><a href="lojista-editar.php?id=<?php echo $row_adminLojista['id'];?>" title="Editar Lojista" class="editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                      <td width="10%"><a href="lojista-excluir.php?id=<?php echo $row_adminLojista['id']; ?>" title="Excluir lojista" class="excluir"><span class="glyphicon glyphicon-remove"></span></a></td>
                                     </tr>
                                     <?php } while ($row_adminLojista = mysql_fetch_assoc($adminLojista)); ?>
+                                    <?php } ?>
                               </tbody>
                             </table>
     
                         </div>
                         <div class="panel-footer">
                             <ul class="pagination">
-                                <li><a href="<?php printf("%s?pageNum_adminLojista=%d%s", $currentPage, 0, $queryString_adminLojista); ?>"><span class="glyphicon glyphicon-backward"></span></a></li>
+                                
                                 <li><a href="<?php printf("%s?pageNum_adminLojista=%d%s", $currentPage, max(0, $pageNum_adminLojista - 1), $queryString_adminLojista); ?>"><span class="glyphicon glyphicon-step-backward"></span></a></li>
                                 <li> <a><?php echo ($startRow_adminLojista + 1) ?> a <?php echo min($startRow_adminLojista + $maxRows_adminLojista, $totalRows_adminLojista) ?> de <?php echo $totalRows_adminLojista ?> </a> </li>
                                 <li><a href="<?php printf("%s?pageNum_adminLojista=%d%s", $currentPage, min($totalPages_adminLojista, $pageNum_adminLojista + 1), $queryString_adminLojista); ?>"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-                                <li><a href="<?php printf("%s?pageNum_adminLojista=%d%s", $currentPage, $totalPages_adminLojista, $queryString_adminLojista); ?>"><span class="glyphicon glyphicon-forward" ></span></a></li>
+                                
                             </ul>
                         </div>
                         <?php }else{ ?>
                         <div class="panel-body">
-                            <table class="table">
-                                <tbody>
+                            
                                   <?php if ($totalRows_RsLojistas == 0) { // Show if recordset empty ?>
                                   <tr>
-                                  <td colspan="4">Não a nenhum lojista cadastardo</td>
+                                  <p align="left">Não há nenhum lojista cadastardo</p>
                                   </tr>
                                   <?php } // Show if recordset empty ?>
+                                  <table class="table">
+                                	<tbody>
 								  <?php do { ?>
                                     <tr>
-                                      <td width="16%">&nbsp;</td>
-                                      <td width="60%"><a href="ofertas.php?id=<?php echo $row_RsLojistas['id'];?>" title="Editar Lojista" class="editar"><?php echo $row_RsLojistas['nomeEmpresa']; ?></a></td>
+                                      <td width="16%"><?php if($row_adminLojista['statos'] == 'on'){ echo '<a href="?desativar='.$row_adminLojista['id'].'" class="btn btn-danger btn-xs" title="Desativar conta"><span class="glyphicon glyphicon-eye-close"></span></a>'; }else{ echo '<a href="?ativar='.$row_adminLojista['id'].'" class="btn btn-success btn-xs" title="Ativar conta"><span class="glyphicon glyphicon-eye-open"></span></a>';} ?></td>
+                                      <td width="60%" align="left"><a href="ofertas.php?id=<?php echo $row_RsLojistas['id'];?>" title="Editar Lojista" class="editar"><?php echo $row_RsLojistas['nomeEmpresa']; ?></a></td>
                                       <td width="8%"><a href="lojista-editar.php?id=<?php echo $row_RsLojistas['id'];?>" title="Editar Lojista" class="editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                       
                                       <td width="8%"><a href="lojista-excluir.php?id=<?php echo $row_RsLojistas['id']; ?>" title="Excluir lojista" class="excluir"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -294,11 +363,11 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                         </div>
                         <div class="panel-footer">
                             <ul class="pagination">
-                                <li><a href="<?php printf("%s?pageNum_RsLojistas=%d%s", $currentPage, 0, $queryString_RsLojistas); ?>"><span class="glyphicon glyphicon-backward"></span></a></li>
+                                
                                 <li><a href="<?php printf("%s?pageNum_RsLojistas=%d%s", $currentPage, max(0, $pageNum_RsLojistas - 1), $queryString_RsLojistas); ?>"><span class="glyphicon glyphicon-step-backward"></span></a></li>
                                 <li> <a><?php echo ($startRow_RsLojistas + 1) ?> a <?php echo min($startRow_RsLojistas + $maxRows_RsLojistas, $totalRows_RsLojistas) ?> de <?php echo $totalRows_RsLojistas ?></a> </li>
                                 <li><a href="<?php printf("%s?pageNum_RsLojistas=%d%s", $currentPage, min($totalPages_RsLojistas, $pageNum_RsLojistas + 1), $queryString_RsLojistas); ?>"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-                                <li><a href="<?php printf("%s?pageNum_RsLojistas=%d%s", $currentPage, $totalPages_RsLojistas, $queryString_RsLojistas); ?>"><span class="glyphicon glyphicon-forward" ></span></a></li>
+                                
                             </ul>
                         </div> 
                         <?php } ?>                       
@@ -306,29 +375,29 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
        			</div>
                 <div class="col-md-8">
                 	<div class="row">
-                        <div class="col-md-12" style=" text-align:center; padding:10px;">
+                        
                             <?php
                             if(isset($_GET['action'])){
                                 if($_GET['action'] == 'cadastrado'){
-                                    echo '<div class="alert alert-success" role="alert">Lojista Cadastrado!</div>';
+                                    echo '<div class="col-md-12" style=" text-align:center; padding:10px;"><div class="alert alert-success" role="alert">Lojista Cadastrado!</div></div>';
                                 }
                                 elseif($_GET['action'] == 'excluido'){
-                                    echo '<div class="alert alert-success" role="alert">Lojista Excluido!</div>';
+                                    echo '<div class="col-md-12" style=" text-align:center; padding:10px;"><div class="alert alert-success" role="alert">Lojista Excluido!</div></div>';
                                 }
                                 elseif($_GET['action'] == 'editado'){
-                                    echo '<div class="alert alert-success" role="alert">Lojista Editado!</div>';
+                                    echo '<div class="col-md-12" style=" text-align:center; padding:10px;"><div class="alert alert-success" role="alert">Lojista Editado!</div></div>';
                                 }
                                 
                             }
                             ?>
                             
-                        </div>
+                        
                         <div class="col-md-4">
                         <div class="panel panel-primary">
                             <div class="panel-heading">Ofertas cadatradas</div>
                             <div class="panel-body">
                             	<?php if($totalRows_ofertas == 0){?>
-									<p> Não a Ofertas cadastradas</p>
+									<p> Não há Ofertas cadastradas</p>
                                 <?php }else{?>
                                 <h4><?php echo $totalRows_ofertas;?> <span class="glyphicon glyphicon-shopping-cart"></span></h4>
                                 <?php } ?>
@@ -337,10 +406,10 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                         </div>
                         <div class="col-md-4">
                             <div class="panel panel-primary">
-                                <div class="panel-heading">Tabloides cadastrados</div>
+                                <div class="panel-heading">Tablóides cadastrados</div>
                                 <div class="panel-body">
                                 <?php if($totalRows_tabloides == 0){?>
-									<p> Não a tabloides cadastradas</p>
+									<p> Não há tablóides cadastradas</p>
                                 <?php }else{?>
                                    <h4><?php echo $totalRows_tabloides;?> <span class="glyphicon glyphicon glyphicon-bullhorn"></span></h4>
                                    <?php } ?> 
@@ -352,7 +421,7 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                                 <div class="panel-heading">Presentes cadastrados</div>
                                 <div class="panel-body">
                                 <?php if($totalRows_presentes == 0){?>
-									<p> Não a presentes cadastradas</p>
+									<p> Não há presentes cadastradas</p>
                                 <?php }else{?>
                                     <h4><?php echo $totalRows_presentes;?> <span class="glyphicon glyphicon glyphicon glyphicon-gift"></span></h4>
                                     <?php } ?> 
@@ -362,10 +431,10 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                         <div class="col-md-4">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">Solicitações</div>
-                                <p>Solicitações que foram cadastradas</p>
                                 <div class="panel-body">
+                                <p>Solicitações que foram cadastradas</p>
                                 <?php if($totalRows_solicitacoes == 0){?>
-									<p> Não a solicitacões cadastradas</p>
+									<p> Não há solicitacões cadastradas</p>
                                 <?php }else{?>
                                     <h4><?php echo $totalRows_solicitacoes;?> <span class="glyphicon glyphicon-check"></span></h4> 
                                     <?php } ?>
@@ -375,10 +444,11 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                         <div class="col-md-4">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">Vendidos</div>
-                                <p>Solicitações que foram vendidas</p>
                                 <div class="panel-body">
+                                
+                                <p>Solicitações que foram vendidas</p>
                                  <?php if($totalRows_vendidos == 0){?>
-									<p> Não a vendas cadastradas</p>
+									<p> Não há vendas cadastradas</p>
                                 <?php }else{?>
                                     <h4><?php echo $totalRows_vendidos;?> <span class="glyphicon glyphicon-send"></span></h4> 
                                     <?php } ?>
@@ -388,12 +458,13 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                         <div class="col-md-4">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">Cliks em Presentes</div>
-                                <p>Soma de cliks que concorre aos presentes</p>
                                 <div class="panel-body">
-                                <?php if($row_concorrentes['SUM(cliks)'] ==''){?>
-									<p> Não a cliks em presentes</p>
+                                
+                                <p>Soma de cliks que concorre aos presentes</p>
+                                <?php if($row_concorrentes['SUM(g.cliks)'] ==''){?>
+									<p> Não há cliks em presentes</p>
                                 <?php }else{?>
-                                    <h4><?php echo $row_concorrentes['SUM(cliks)']?> <span class="glyphicon glyphicon-stats"></span></h4>
+                                    <h4><?php echo $row_concorrentes['SUM(g.cliks)']?> <span class="glyphicon glyphicon-stats"></span></h4>
                                     <?php } ?> 
                                 </div>
                             </div>

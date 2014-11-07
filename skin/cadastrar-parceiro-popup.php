@@ -6,11 +6,17 @@
 * Arquivo de cadastro do usuario do sistema oferapp
 * Versão: 1.0
 */
-if(isset($_POST['submit']) && isset($_POST['termos']) && $_POST['submit'] == 'cadastrarLojista' && $_POST['termos'] == true){
+if(isset($_POST['submit']) && isset($_POST['termos']) && $_POST['submit'] == 'cadastrarParceiro' && $_POST['termos'] == true){
+$query_contato = "SELECT * FROM admin WHERE nome = 'Root'";
+$resultado_contato = mysqli_query($dboferapp, $query_contato);
+$email_row = mysqli_fetch_assoc($resultado_contato);
+$row_emaildb = mysqli_fetch_array($resultado_contato);
+$row_totalRows = mysqli_num_rows($resultado_contato);
+
 $nomeEmpresa       = $_POST['nomeParceiro'];
 $cidadePerceiro    = $_POST['cidadePerceiro'];
 $emailremetente    = trim($_POST['emailParceiro']);
-$emaildestinatario = 'jefteamorim@gmail.com'; // Digite seu e-mail aqui, lembrando que o e-mail deve estar em seu servidor web
+$emaildestinatario = 'jefteamorim@gmail.com, '.$row_emaildb['email']; // Digite seu e-mail aqui, lembrando que o e-mail deve estar em seu servidor web
 $celular     	   = $_POST['celularParceiro'];
 $telefone      	   = $_POST['telefoneParceiro'];
 $assunto           = "Pedido de cadastro de Parceiro";
@@ -98,14 +104,15 @@ if(isset($msgpsuccess)){
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                <label>
-                                	<input type="checkbox" name="termos" id="termos" required/><a href="termos">Eu concordo com os termos</a> 
+                                <label>Leia os termos clicando no link abaixo.<br />
+                                	<input type="checkbox" name="termos" id="termos" required/><a href="#termos-de-uso" data-toggle="modal">Eu concordo com os termos</a> 
                                 </label>
                                 </div>
                             </div>
                     	</div>
                 </div>
                 <div class="modal-footer">
+                	<input type="hidden" name="submit" value="cadastrarParceiro">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
                     <button type="submit" class="btn btn-primary" name="salvar" id="salvar">Salvar</button>
                 

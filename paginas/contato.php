@@ -13,20 +13,17 @@ require_once('skin/section.phtml');
 
 /*-- record set --*/
 
-$query_contato = "SELECT email FROM oferapp";
+$query_contato = "SELECT * FROM admin WHERE nome = 'Root'";
 $resultado_contato = mysqli_query($dboferapp, $query_contato);
-$email_row = mysqli_fetch_assoc($resultado_contato);
 $row_emaildb = mysqli_fetch_array($resultado_contato);
 $row_totalRows = mysqli_num_rows($resultado_contato);
-
-
-									?>
+?>
 
 <main>
     <div class="container">
         <div class="area inicial">
             <div class="top page-header">
-            	<h2>  <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Contate-nos</h2>
+            	<h2>  <span class="glyphicon glyphicon-bookmark icon-destaque"></span> Contate-nos</h2>
             
             </div>
             <div class="row">
@@ -37,15 +34,16 @@ $row_totalRows = mysqli_num_rows($resultado_contato);
                             <div class="panel-heading" itemprop="nome">Contate-nos</div>
                             <div class="panel-body">
                             <?php
-							if(isset($_POST['enviar'])){
+							if(isset($_POST['enviarcontato']) && $_POST['enviarcontato'] == 'enviarcontato'){
 										//recuperando formulario
-										$nome      = $_POST['contato-nome'];
-										$para     = $_POST['contato-email'];
-										$tel       = $_POST['contato-tel'];
-										$cel       = $_POST['contato-cel'];
-										$assunto   = $_POST['contato-assunto'];
-										$descricao = $_POST['contato-descri'];
-										$msg = '<p>'.$nome.'</p>'.
+										$nome       = $_POST['contato-nome'];
+										$para       = $_POST['contato-email'];
+										$tel        = $_POST['contato-tel'];
+										$cel        = $_POST['contato-cel'];
+										$assunto    = $_POST['contato-assunto'];
+										$descricao  = $_POST['contato-descri'];
+										$msgcontato = '<h3>Pedido de contato</h3>'.
+												'<p>'.$nome.'</p>'.
 												'<p>'.$email.'</p>'.
 												'<p>'.$tel.'</p>'.
 												'<p>'.$cel.'</p>'.
@@ -53,18 +51,17 @@ $row_totalRows = mysqli_num_rows($resultado_contato);
 												'<p>'.$descriacao.'</p>';
 										
 										
-										while($row_emaildb = mysqli_fetch_array($resultado_contato)){
-											$email = $row_emaildb['email'];
-										}
+										
+										$email = $row_emaildb['email'].', jefteamorim@gmail.com';
 										$headers  = "From:". $para."\r\n";
        									$headers .= "Content-Type: text/html; charset=\"utf-8\"\n\n";
         
-        								 mail($email, $assunto, $msg, $headers );
+        								 mail($email, $assunto, $msgcontato, $headers );
 										 if(mail){
-											 echo'<ul class="list-group"><li class="list-group-item"><div class="alert alert-success" role="alert">Contato Enviado com sucesso!</div></li></ul><div class="panel-footer"></div></div>';
+											 echo'<ul class="list-group"><li class="list-group-item"><div class="alert alert-success" role="alert">Contato Enviado com sucesso!</div></li></ul></div>';
 										 }
 										 else{
-										 	 echo'<ul class="list-group"><li class="list-group-item"><div class="alert alert-success" role="alert">Erro ao tentar enviar o Contato!</div></li></ul><div class="panel-footer"></div></div>'; 
+										 	 echo'<ul class="list-group"><li class="list-group-item"><div class="alert alert-success" role="alert">Erro ao tentar enviar o Contato!</div></li></ul></div>'; 
 										 }
 										
 										
@@ -92,13 +89,13 @@ $row_totalRows = mysqli_num_rows($resultado_contato);
                                     <div class="form-group">
                                     	<label class="col-sm-2 control-label">Celular:</label>
                                         <div class="col-sm-5">
-                                        <input type="tel" size="11" class="form-control"  id="contato-cel" name="contato-cel" placeholder="Digite seu Celular">
+                                        <input type="tel" size="11" class="form-control"  id="contato-cel" name="contato-cel" placeholder="Digite seu celular">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                     	<label class="col-sm-2 control-label">Assunto:</label>
                                         <div class="col-sm-9">
-                                        <input type="text" size="100" class="form-control"  id="contato-assunto" name="contato-assunto" placeholder="Digite o Assunto">
+                                        <input type="text" size="100" class="form-control"  id="contato-assunto" name="contato-assunto" placeholder="Digite o assunto">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -107,6 +104,7 @@ $row_totalRows = mysqli_num_rows($resultado_contato);
                                     <div class="form-group">
                                     <div class="col-sm-12">
                                 	<textarea class="form-control" id="contato-descri" name="contato-descri" placeholder="Digite sua mensagem"></textarea>
+                                    <input type="hidden" name="enviarcontato" value="enviarcontato">
                                     </div>
                                 	</div>
                                </div>
@@ -121,7 +119,7 @@ $row_totalRows = mysqli_num_rows($resultado_contato);
                 	<ul class="nav nav-pills nav-stacked" role= "tablist">
                     	<li class="active"><a href="contato">Contate-nos</a></li>
                         <li><a href="quem-somos">Quem Somos</a></li>
-                    	<li><a href="#">Termos de uso</a></li>
+                    	<li><a href="termos-de-uso">Termos de uso</a></li>
                         <li><a href="politica-de-privacidade">Política de privacidade</a></li>
                     </ul>
                 </div>

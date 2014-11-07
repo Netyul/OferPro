@@ -7,9 +7,9 @@
  
 /* -- defines do banco de dados --*/
 define("HOST", "localhost");
-define("USER", "jefte_jefte");
+define("USER", "oferapp_jefte");
 define("PASS","**987jft");
-define("DB", "jefte_oferapp");
+define("DB", "oferapp_oferapp");
 
 /*-- fim banco de dados --*/
 

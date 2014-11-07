@@ -136,6 +136,7 @@ $queryString_ganhapresente = sprintf("&totalRows_ganhapresente=%d%s", $totalRows
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Administração da OferApp</title>
 <!-- InstanceEndEditable -->
+<link href="../../skin/images/favicon.png" rel="icon" type="image/x-icon"/>
 <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 <link href="../css/oferapp.css" rel="stylesheet" type="text/css">
@@ -166,21 +167,43 @@ $queryString_ganhapresente = sprintf("&totalRows_ganhapresente=%d%s", $totalRows
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo BASEURL; ?>"><img  src="../images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
+                <a class="navbar-brand" href="<?php echo BASEURL; ?>/admin/lojista/"><img  src="../images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            	<ul class="nav navbar-nav">
+                    <li><a href="../../admin/"><img src="../../skin/images/estatisticas.jpg" width="39"> Ofer Estatísticas (BR)</a></li>                    
+                  </ul>
                 <ul class="nav navbar-nav navbar-right">
                 	<?php 
 					$level = LEVEL;
 					if($level == 'superadmin'){
 					?>                 
-                    <li><a href="<?php echo BASEURL; ?>/admin/cidade">Cidades</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/admin/administradores">Administradores</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/cidade" style="padding-top: 17px !important; padding-bottom: 16px !important;">Cidades</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/administradores" style="padding-top: 17px !important; padding-bottom: 16px !important;">Administradores</a></li>
+                   <?php }else{
+						$colname_admin = "-1";
+						if (isset($_SESSION['admin_id'])) {
+						  $colname_admin = $_SESSION['admin_id'];
+						}
+						mysql_select_db($database_dboferapp, $dboferapp);
+						$query_admin = sprintf("SELECT a.id, c.nome, e.sigla FROM admin AS a INNER JOIN cidade AS c ON a.cidade = c.id INNER JOIN estado AS e ON c.id_uf = e.id WHERE a.id = %s", GetSQLValueString($colname_admin, "int"));
+						$admin = mysql_query($query_admin, $dboferapp) or die(mysql_error());
+						$row_admin = mysql_fetch_assoc($admin); 
+						$Ecidade =  $row_admin['nome'].'-'.$row_admin['sigla'];
+						$LinkCidade = str_replace(" ","-", $row_admin['nome']);
+						$link = $LinkCidade.'-'.$row_admin['sigla'];
+					?>
+                    <li>
+                    	<div class="btn-group btn-group-cidade" role="menuitem" style="padding: 13px">
+            				<a class="btn btn-default">Cidade: <?php echo $Ecidade; ?></a>
+            
+            			</div>
+                    </li>
                     <?php } ?>
-                    <li><a href="<?php echo BASEURL; ?>/admin/lojista">Lojistas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/lojista" style="padding-top: 17px !important; padding-bottom: 16px !important;">Meus Lojistas</a></li>
                     <li class="dropdown ">
-                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo ADMNOME; ?> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown" style="padding-top: 17px !important; padding-bottom: 16px !important;"><span class="glyphicon glyphicon-user"></span> <?php echo ADMNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="<?php echo BASEURL; ?>/admin/logout">sair</a></li>
                         </ul>
@@ -194,12 +217,12 @@ $queryString_ganhapresente = sprintf("&totalRows_ganhapresente=%d%s", $totalRows
 <main>
     <div class="container">
         <div class="area principal">
-            <div class="top page-header">
+            <div class="top page-header" style="padding-left:17px">
             <!-- InstanceBeginEditable name="tituloPagina" -->
             <?php 
 				
 			?>
-            <h2> <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Administração Presentes</h2>
+            <h2> <span class="glyphicon glyphicon-bookmark icon-destaque"></span> Administrar Presentes</h2>
             <?php ?>
             <!-- InstanceEndEditable -->
             </div>
@@ -207,17 +230,17 @@ $queryString_ganhapresente = sprintf("&totalRows_ganhapresente=%d%s", $totalRows
             <!-- InstanceBeginEditable name="conteudo" -->
               <div class="col-md-4">
               	<div class="panel panel-default">
-                	<div class="panel-heading">
+                	<div class="panel-heading" align="left">
                     	Presente Cadastrado
                     </div>
                     <div class="panel-body">
-                        <table class="table">
+                        
                         	<?php if($totalRows_presentes == 0){?>
-                        	<tr>
-                            	<td colspan="3">não a nenhum presente cadastrado</td>
-                            </tr>
+                        	
+                            	<p align="left">não há nenhum presente cadastrado</p>
+                           
                             <?php }else{?>
-                            
+                            <table class="table">
                             <tr>
                                 <td width="31%" rowspan="3"><img src="<?php echo BASEURL .'/'.IMGPRESENTES. $row_presentes['img']; ?>" class="img-rounded" width="120"></td>
                                 <td colspan="2"><?php echo $row_presentes['titulo']; ?></td>
@@ -235,10 +258,10 @@ $queryString_ganhapresente = sprintf("&totalRows_ganhapresente=%d%s", $totalRows
                     </div>
                 </div> 
             </div>
-             <div class="col-md-8" style="padding:5px;" align="right">
+             <div class="col-md-8" style="padding-bottom:7px;" align="right">
             	
             	<a href="ofertas.php?id=<?php echo $colname_presentes; ?>" class="btn btn-Oferapp">Ofertas</a>
-              	<a href="tabloides.php?id=<?php echo $colname_presentes; ?>" class="btn btn-Oferapp">Tabloides</a>
+              	<a href="tabloides.php?id=<?php echo $colname_presentes; ?>" class="btn btn-Oferapp">Tablóides</a>
                 <a href="presentes.php?id=<?php echo $colname_presentes; ?>" class="btn btn-Oferapp">Presentes</a>
                 
             </div>
@@ -246,11 +269,11 @@ $queryString_ganhapresente = sprintf("&totalRows_ganhapresente=%d%s", $totalRows
             <div class="col-md-8">
 				<?php if($totalRows_presentes == 0){?>
                 <div class="panel panel-default">
-                	<div class="panel-heading"> Cadastre um Presente</div>
+                	<div class="panel-heading" align="left"> Cadastre um Presente</div>
                     <div class="panel-body">
                    	  <form action="<?php echo $editFormAction; ?>" method="post" enctype="multipart/form-data" name="presentes" class="form-horizontal">
                         	<div class="form-group">
-                            	<label class="col-sm-4 control-label">Titulo do Presnte</label>
+                            	<label class="col-sm-4 control-label">Título do Presnte</label>
                                 <div class="col-sm-8">
                                 	<input type="text" name="nome" class="form-control" required>
                                 </div>
@@ -271,8 +294,9 @@ $queryString_ganhapresente = sprintf("&totalRows_ganhapresente=%d%s", $totalRows
                             </div>
                             <div class="form-group">
                             	<label class="col-sm-4 control-label">Imagem:</label>
-                                <div class="col-sm-8">
-                                	<input type="file" name="img" required >
+                                <div class="col-sm-8" align="left">
+                                	<input type="file" name="img" id="file-original" required>
+                                <button type="button" class="btn btn-Oferapp" onclick="this.form.img.click()"><span class="glyphicon glyphicon-picture"></span> Procurar...</button>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -302,7 +326,7 @@ $queryString_ganhapresente = sprintf("&totalRows_ganhapresente=%d%s", $totalRows
 						}
 			   ?>
                 <div class="panel panel-default">
-                	<div class="panel-heading">Usuarios concorrendo ao Presente</div>
+                	<div class="panel-heading" align="left">Usuarios concorrendo ao Presente</div>
                     <div class="panel-body">
                     <table class="table">
                       <tr>

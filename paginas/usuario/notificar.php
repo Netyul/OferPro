@@ -35,7 +35,7 @@
                             <?php
 							$totalrows_minhasOfertas = mysqli_num_rows($result_minhasOfertas);
 							if($totalrows_minhasOfertas == 0){
-								echo '<div class="alert alert-warning" role="alert">Não a Notificações!</div>';
+								echo '<div class="alert alert-warning" role="alert">Não há Notificações!</div>';
 							}
 							while($row_minhasOferta = mysqli_fetch_array($result_minhasOfertas)){
 							?>

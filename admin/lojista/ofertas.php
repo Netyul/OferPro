@@ -177,6 +177,7 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Administração da OferApp</title>
 <!-- InstanceEndEditable -->
+<link href="../../skin/images/favicon.png" rel="icon" type="image/x-icon"/>
 <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 <link href="../css/oferapp.css" rel="stylesheet" type="text/css">
@@ -207,21 +208,43 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo BASEURL; ?>"><img  src="../images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
+                <a class="navbar-brand" href="<?php echo BASEURL; ?>/admin/lojista/"><img  src="../images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            	<ul class="nav navbar-nav">
+                    <li><a href="../../admin/"><img src="../../skin/images/estatisticas.jpg" width="39"> Ofer Estatísticas (BR)</a></li>                    
+                  </ul>
                 <ul class="nav navbar-nav navbar-right">
                 	<?php 
 					$level = LEVEL;
 					if($level == 'superadmin'){
 					?>                 
-                    <li><a href="<?php echo BASEURL; ?>/admin/cidade">Cidades</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/admin/administradores">Administradores</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/cidade" style="padding-top: 17px !important; padding-bottom: 16px !important;">Cidades</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/administradores" style="padding-top: 17px !important; padding-bottom: 16px !important;">Administradores</a></li>
+                   <?php }else{
+						$colname_admin = "-1";
+						if (isset($_SESSION['admin_id'])) {
+						  $colname_admin = $_SESSION['admin_id'];
+						}
+						mysql_select_db($database_dboferapp, $dboferapp);
+						$query_admin = sprintf("SELECT a.id, c.nome, e.sigla FROM admin AS a INNER JOIN cidade AS c ON a.cidade = c.id INNER JOIN estado AS e ON c.id_uf = e.id WHERE a.id = %s", GetSQLValueString($colname_admin, "int"));
+						$admin = mysql_query($query_admin, $dboferapp) or die(mysql_error());
+						$row_admin = mysql_fetch_assoc($admin); 
+						$Ecidade =  $row_admin['nome'].'-'.$row_admin['sigla'];
+						$LinkCidade = str_replace(" ","-", $row_admin['nome']);
+						$link = $LinkCidade.'-'.$row_admin['sigla'];
+					?>
+                    <li>
+                    	<div class="btn-group btn-group-cidade" role="menuitem" style="padding: 13px">
+            				<a class="btn btn-default">Cidade: <?php echo $Ecidade; ?></a>
+            
+            			</div>
+                    </li>
                     <?php } ?>
-                    <li><a href="<?php echo BASEURL; ?>/admin/lojista">Lojistas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/lojista" style="padding-top: 17px !important; padding-bottom: 16px !important;">Meus Lojistas</a></li>
                     <li class="dropdown ">
-                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo ADMNOME; ?> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown" style="padding-top: 17px !important; padding-bottom: 16px !important;"><span class="glyphicon glyphicon-user"></span> <?php echo ADMNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="<?php echo BASEURL; ?>/admin/logout">sair</a></li>
                         </ul>
@@ -235,12 +258,12 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
 <main>
     <div class="container">
         <div class="area principal">
-            <div class="top page-header">
+            <div class="top page-header" style="padding-left:17px">
             <!-- InstanceBeginEditable name="tituloPagina" -->
             <?php 
 				
 			?>
-            <h2> <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Administração Ofertas </h2>
+            <h2><span class="glyphicon glyphicon-bookmark icon-destaque"></span> Administrar Ofertas </h2>
             <?php ?>
             <!-- InstanceEndEditable -->
             </div>
@@ -248,15 +271,18 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
             <!-- InstanceBeginEditable name="conteudo" -->
               <div class="col-md-4">
                 <div class="panel panel-default">
-                	<div class="panel-heading">Ofertas Cadatradas</div>
+                	<div class="panel-heading" align="left">Ofertas Cadatradas</div>
                     <div class="panel-body">
-                   	  <p>Ofertas da loja <?php echo $row_lojista['nomeFantasia'];?></p>
-                      <table class="table">
+                   	  <p align="left"><span style="color:#0A6340; font-weight:bold; font-style:italic">Usuário:</span> <?php echo $row_lojista['nomeFantasia'];?></p>
+                      
                       	  <?php if($totalRows_ofertas == 0){?>
-                          <tr>
-                          	<td colspan="3">Não a ofertas cadastradas para esse lojista</td>
-                          </tr>
-                          <?php }else{ do { ?>
+                          
+                          	<p align="left">Não há ofertas cadastradas para esse lojista</p>
+                          
+                          <?php }else{?>
+                          <table class="table">
+						  <?php do { ?>
+                          
                           <tr>
                             
                             <td width="33%" rowspan="2"><img src="<?php echo BASEURL.'/'.IMGOFERTAS. $row_ofertas['img']; ?>" class="img-rounded" width="110" height="76"></td>
@@ -275,21 +301,21 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
   				</div>
                 <div class="panel-footer">
                      <ul class="pagination">
-                     	<li><a href="<?php printf("%s?pageNum_ofertas=%d%s", $currentPage, 0, $queryString_ofertas); ?>"><span class="glyphicon glyphicon-backward"></span></a></li>
+                     	
                         <li><a href="<?php printf("%s?pageNum_ofertas=%d%s", $currentPage, max(0, $pageNum_ofertas - 1), $queryString_ofertas); ?>"><span class="glyphicon glyphicon-step-backward"></span></a></li>
                         <li><a><?php echo ($startRow_ofertas + 1) ?> a <?php echo min($startRow_ofertas + $maxRows_ofertas, $totalRows_ofertas) ?> de <?php echo $totalRows_ofertas ?> </a></li>
                         <li><a href="<?php printf("%s?pageNum_ofertas=%d%s", $currentPage, min($totalPages_ofertas, $pageNum_ofertas + 1), $queryString_ofertas); ?>"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-                        <li><a href="<?php printf("%s?pageNum_ofertas=%d%s", $currentPage, $totalPages_ofertas, $queryString_ofertas); ?>"><span class="glyphicon glyphicon-forward" ></span></a></li>
+                        
                      </ul>
                 </div>
                 
             </div>
               </div>
               
-            <div class="col-md-8" style="padding:5px;" align="right">
+            <div class="col-md-8" style="padding-bottom:7px;" align="right">
             	<a href="solicitacao.php?id=<?php echo $row_lojista['id']; ?>" class="btn btn-default">Solicitações <?php if($totalRows_solicitacoes > 0){ echo '<span class="badge">'.$totalRows_solicitacoes.'</span>';}?></a>
             	<a href="ofertas.php?id=<?php echo $row_lojista['id']; ?>" class="btn btn-Oferapp">Ofertas</a>
-              	<a href="tabloides.php?id=<?php echo $row_lojista['id']; ?>" class="btn btn-Oferapp">Tabloides</a>
+              	<a href="tabloides.php?id=<?php echo $row_lojista['id']; ?>" class="btn btn-Oferapp">Tablóides</a>
                 <a href="presentes.php?id=<?php echo $row_lojista['id']; ?>" class="btn btn-Oferapp">Presentes</a>
                 
             </div>
@@ -309,13 +335,13 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
 						}
 			   ?>
               	<div class="panel panel-default">
-                    <div class="panel-heading">Cadastrar ofertas</div>
+                    <div class="panel-heading" align="left">Cadastrar ofertas</div>
                     <div class="panel-body">
                       <form action="<?php echo $editFormAction; ?>" method="post" enctype="multipart/form-data" name="form1" class="form-horizontal">
                        		<div class="form-group">
-                            <label for="titulo da oferta" class="col-sm-4 control-label">Titulo da Oferta:</label>
+                            <label for="titulo da oferta" class="col-sm-4 control-label">Título da Oferta:</label>
                             <div class="col-sm-8">
-                            <input type="text" name="titulo" value="" size="150" class="form-control" required placeholder="Digite o titulo da oferta">
+                            <input type="text" name="titulo" value="" size="150" class="form-control" required placeholder="Digite o título da oferta">
                             </div>
                           </div>
                           <div class="form-group">
@@ -345,16 +371,17 @@ $queryString_ofertas = sprintf("&totalRows_ofertas=%d%s", $totalRows_ofertas, $q
                           <div class="form-group">
                             <label for="valor" class="col-sm-4 control-label">Valor R$:</label>
                             <div class="col-sm-2">
-                            <input type="text" name="valor" value="" size="32" class="form-control" required placeholder="45.00">
+                            <input type="text" name="valor" value="" size="32" class="form-control" required placeholder="00.00">
                             </div>
                           </div>
                           <div class="form-group">
                             <label for="imagem" class="col-sm-4 control-label">Imagem:</label>
-                            <div class="col-sm-4">
-                            <input type="file" name="img" value="">
+                            <div class="col-sm-8" align="left">
+                            	<input type="file" name="img" id="file-original" required>
+                                <button type="button" class="btn btn-Oferapp" onclick="this.form.img.click()"><span class="glyphicon glyphicon-picture"></span> Procurar...</button>
                             </div>
                           </div>
-                          <div class="form-group">
+                          <div class="form-group" style="padding:15px">
                             <button type="submit" class="btn btn-primary">Salvar</button>
                           </div>
                        

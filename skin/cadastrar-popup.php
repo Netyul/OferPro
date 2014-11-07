@@ -6,7 +6,7 @@
 * Arquivo de cadastro do usuario do sistema oferapp
 * Versão: 1.0
 */
-if(isset($_POST['salvar'])){
+if(isset($_POST['salvacadastro']) && $_POST['salvacadastro'] == 'salvacadastro'){
 	$termos = isset($_POST['termos']) ? $_POST['termos'] : false;
 	$nome = mysqli_real_escape_string($dboferapp, trim($_POST['nome']));
 	$email = $_POST['email'];
@@ -61,7 +61,7 @@ if(isset($_POST['salvar'])){
 			$msgc ='<div class="alert alert-warning" role="alert">Por favor a confirmação da sua senha e diferente!</div>';
 		}
 		else{
-			$cadastro_query = "INSERT INTO usuario(nome, email, datanascimento, senha, celular, sexo, img) VALUES('".$nome."', '".$email."', '".$dataNascimento."', '".$senhac."', '".$celular."', '".$sexo."', '2e348c19733c81882d7da5527c0d.png')";
+			$cadastro_query = "INSERT INTO usuario(nome, email, datanascimento, senha, celular, sexo, img) VALUES('".$nome."', '".$email."', '".$dataNascimento."', '".$senhac."', '".$celular."', '".$sexo."', 'af96b08fd225d77b4dbcca8886c0.jpg')";
 			$inserircadastro = mysqli_query($dboferapp, $cadastro_query);
 			if($inserircadastro){
 				$msgcsuccess ='<div class="alert alert-success" role="alert">cadastro efetuado com sucesso!</div>';
@@ -102,7 +102,7 @@ if(isset($msgc)){
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Cadastrar Novo Usuario</h4>
+                    <h4 class="modal-title" id="myModalLabel">Cadastrar Novo Usuário</h4>
                 </div>
                 <div class="modal-body">
                 <?php 
@@ -163,14 +163,15 @@ if(isset($msgc)){
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                <label>
-                                	<input type="checkbox" name="termos" id="termos">Eu concordo com os termos
+                                <label>Leia os termos clicando no link abaixo.<br />
+                                	<input type="checkbox" name="termos" id="termos"><a href="#termos-de-uso" data-toggle="modal">Eu concordo com os termos</a>
                                 </label>
                                 </div>
                             </div>
                     	</div>
                 </div>
                 <div class="modal-footer">
+                <input type="hidden" name="salvacadastro" value="salvacadastro"> 
                     <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
                     <button type="submit" class="btn btn-primary" name="salvar" id="salvar">Salvar</button>
                 

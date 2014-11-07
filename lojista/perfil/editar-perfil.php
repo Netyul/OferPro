@@ -1,4 +1,4 @@
-﻿<?php require_once('../verificar-login.php');?>
+<?php require_once('../verificar-login.php');?>
 <?php require_once('../../Connections/dboferapp.php'); ?>
 <?php
 require_once('../../sistema/classes/W3_Image.class.php');
@@ -48,13 +48,13 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 		$imagetype[1] = 'jpg';
 	}
 	if(!empty($imagemTemp)){
-		$imgperfil = IMGPRESENTES;
+		$imgperfil = IMGPERFIL;
 		$editeImg = explode('.',$row_EditeLojista['img']);
 		$img = new W3_Image;
 		$img->create($imagemTemp, 218, 147,'../../'.$imgperfil. $editeImg[0].'.thumb.'.$imagetype[1]);
 		$img->create($imagemTemp, 570, 450,'../../'.$imgperfil. $editeImg[0].'.'. $imagetype[1]);
 	}
-  $updateSQL = sprintf("UPDATE lojista SET nomeEmpresa=%s, nomeFantasia=%s, nomeResponsavel=%s, email=%s, senha=%s, endereco=%s, bairro=%s, cidade=%s, cep=%s, cpf=%s, cnpj=%s, tipoLojista=%s, telefone=%s, celular=%s, img=%s WHERE id=%s",
+  $updateSQL = sprintf("UPDATE lojista SET nomeEmpresa=%s, nomeFantasia=%s, nomeResponsavel=%s, email=%s, senha=%s, endereco=%s, bairro=%s, cidade=%s, cep=%s, cpf=%s, cnpj=%s, tipoLojista=%s, telefone=%s, celular=%s WHERE id=%s",
                        GetSQLValueString($_POST['nomeEmpresa'], "text"),
                        GetSQLValueString($_POST['nomeFantasia'], "text"),
                        GetSQLValueString($_POST['nomeResponsavel'], "text"),
@@ -68,8 +68,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
                        GetSQLValueString($_POST['cnpj'], "text"),
                        GetSQLValueString($_POST['tipoLojista'], "text"),
                        GetSQLValueString($_POST['telefone'], "text"),
-                       GetSQLValueString($_POST['celular'], "text"),
-                       GetSQLValueString($editeImg[0].'.'. $imagetype[1], "text"),
+                       GetSQLValueString($_POST['celular'], "text"), 
                        GetSQLValueString($_POST['id'], "int"));
 
   mysql_select_db($database_dboferapp, $dboferapp);
@@ -99,7 +98,7 @@ $cidade = mysql_query($query_cidade, $dboferapp) or die(mysql_error());
 $row_cidade = mysql_fetch_assoc($cidade);
 $totalRows_cidade = mysql_num_rows($cidade);
 ?>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
 <!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
 <!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
@@ -111,6 +110,7 @@ $totalRows_cidade = mysql_num_rows($cidade);
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>OferApp Lojista</title>
 <!-- InstanceEndEditable -->
+<link href="../../skin/images/favicon.png" rel="icon" type="image/x-icon"/>
 <link href="../../admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../../admin/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 <link href="../../admin/css/oferapp.css" rel="stylesheet" type="text/css" />
@@ -124,6 +124,14 @@ $totalRows_cidade = mysql_num_rows($cidade);
 <script src="../../skin/js/respond.min.js"></script>
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
+<?php
+mysql_select_db($database_dboferapp, $dboferapp);
+$query_RSsolicitar = "SELECT * FROM solicitacoes WHERE vendido = 'not'";
+$RSsolicitar = mysql_query($query_RSsolicitar, $dboferapp) or die(mysql_error());
+$row_RSsolicitar = mysql_fetch_assoc($RSsolicitar);
+$totalRows_RSsolicitar = mysql_num_rows($RSsolicitar);
+?>
+
 </head>
 
 <body>
@@ -140,17 +148,20 @@ $totalRows_cidade = mysql_num_rows($cidade);
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo BASEURL; ?>/lojista"><img  src="../../admin/images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
+                <a class="navbar-brand" href="<?php echo BASEURL; ?>/lojista/ofertas"><img  src="../../admin/images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            	 <ul class="nav navbar-nav">
+                    <li><a href="../../lojista/"  style=""><img src="../../skin/images/estatisticas.jpg" width="39"> Ofer Estatísticas</a></li>                    
+                  </ul>
                 <ul class="nav navbar-nav navbar-right">
                 	
-                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas" title="Ofertas" ><img src="../../skin/images/icon_menu_navegacao_usuario_01.png" class=" pull-left" width="39"> Ofertas</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides" title="Tabloides"><img src="../../skin/images/icon_menu_navegacao_usuario_04.png" class=" pull-left" width="39"> Tabloides</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes" title="Presentes"><img src="../../skin/images/icon_menu_navegacao_usuario_03.png" width="39" class=" pull-left"> Presentes</a></li>
+                	<li><a href="<?php echo BASEURL; ?>/lojista/ofertas" title="Ofertas" ><img src="../../skin/images/icon_menu_navegacao_usuario_01.png" width="39"> Ofertas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/tabloides" title="Tabloides"><img src="../../skin/images/icon_menu_navegacao_usuario_04.png" width="39"> Tablóides</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/lojista/presentes" title="Presentes"><img src="../../skin/images/icon_menu_navegacao_usuario_03.png" width="39"> Presentes</a></li>
                     <li class="dropdown ">
-                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo LNOME; ?> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown" style="padding-top: 17px !important; padding-bottom: 16px !important;"><span class="glyphicon glyphicon-user"></span> <?php echo LNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                         	<li><a href="<?php echo BASEURL; ?>/lojista/perfil">Perfil</a></li>
                             <li><a href="<?php echo BASEURL; ?>/lojista/logout">sair</a></li>
@@ -175,10 +186,10 @@ $totalRows_cidade = mysql_num_rows($cidade);
             <?php ?>
             <!-- InstanceEndEditable -->
                     </div>
-                    <div class="col-md-6" align="right">
-                        <ul class="nav nav-pills pull-right">
+                    <div class="col-md-6">
+                        <ul class="nav nav-pills align" style="margin-top:0px;">
                           <li class="active"><a href="../ofertas/solicitacoes/">Solicitações <?php if($totalRows_RSsolicitar < 0){echo '<span class="badge pull-right">'.$totalRows_RSsolicitar.'</span>';} ?></a></li>
-                          <li><a href="#">vendidos</a></li>
+                          <li><a href="../ofertas/solicitacoes/solicitacoes-vendidas.php">vendidos</a></li>
                           
                         </ul>
                     </div>
@@ -187,13 +198,13 @@ $totalRows_cidade = mysql_num_rows($cidade);
             <div class="row">
             <!-- InstanceBeginEditable name="conteudo" -->
               
-              <div class="col-md-4">
+              <div class="col-md-3">
               	<table class="table">
                   <tr>
                     <td colspan="3" align="center"><a href=""><img src="<?php echo BASEURL.'/'.IMGPERFIL.$row_editarperfil['img']; ?>" width="218" height="147" class="img-rounded"></a></td>
                   </tr>
                   <tr>
-                    <td colspan="3"><a href="editar-perfil.php" class="btn btn-primary"> Editar Perfil <span class="glyphicon glyphicon-user"></span></td>
+                    <td colspan="3" align="left"><a href="editar-perfil.php" class="btn btn-primary" title="editar perfil"><span class="glyphicon glyphicon-user"></span></a> <a href="editar-imagem.php" class="btn btn-primary" title="editar imagem"><span class="glyphicon glyphicon-picture"></span></a></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
@@ -202,9 +213,9 @@ $totalRows_cidade = mysql_num_rows($cidade);
                   </tr>
                 </table>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-9">
                   <div class="panel panel-primary">
-                  	<div class="panel-heading"> Edite seu perfil</div>
+                  	<div class="panel-heading" align="left"> Edite seu perfil</div>
                     <div class="panel-body">
                       <form action="<?php echo $editFormAction; ?>" method="post" enctype="multipart/form-data" name="form1" class="form-horizontal">
                        <div class="form-group">
@@ -284,16 +295,16 @@ do {
                             <input class="form-control" title="Digite um CPF valido exemplo 111.111.111-11" type="text" name="cpf" pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$" value="<?php echo htmlentities($row_editarperfil['cpf'], ENT_COMPAT, 'utf-8'); ?>" required>
                           </div>
                           </div>
-                          <div class="form-group" id="cnpj" style="display:none">
+                          <div class="form-group" id="cnpj">
                             <label class="col-sm-4 control-label">CNPJ:</label>
                             <div class="col-sm-5">
-                            <input type="text" class="form-control" name="cnpj" title="Digite um CNPJ valido exemplo 11.111.111/0001-01" value="<?php echo htmlentities($row_editarperfil['cnpj'], ENT_COMPAT, 'utf-8'); ?>">
+                            <input type="text" class="form-control" name="cnpj" title="Digite um CNPJ valido exemplo 11.111.111/0001-01" pattern="[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}$" value="<?php echo htmlentities($row_editarperfil['cnpj'], ENT_COMPAT, 'utf-8'); ?>">
                           </div>
                           </div>
                           
                            <script type="text/javascript">
 								
-                             
+                            /* 
 							$(document).ready(function(){
 								var valor = $("#tipoLojista").val();
                                  if(valor == "Juridica"){
@@ -301,7 +312,7 @@ do {
 										
                                           	$("div#cnpj input").attr({"required" : "required"});
 											$("div#cnpj input").attr({
-											"pattern":"\([0-9]{2}\)[0-9]{4,5}-[0-9]{4}$",
+											"pattern":"[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}$",
 											});  
                                         
 									}else{
@@ -317,7 +328,7 @@ do {
 										$("div#cnpj").show();
 										$("div#cnpj input").attr("required");
 										$("div#cnpj input").attr({
-											"pattern":"\([0-9]{2}\)[0-9]{4,5}-[0-9]{4}$",
+											"pattern":"[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}$",
 											});
 									}else{
 										$("div#cnpj").hide();
@@ -327,7 +338,7 @@ do {
 									}
 									});
                                     
-                            });
+                            });*/
 						  </script>
                           <div class="form-group">
                             <label class="col-sm-4 control-label">Telefone:</label>
@@ -339,12 +350,6 @@ do {
                             <label class="col-sm-4 control-label">Celular:</label>
                             <div class="col-sm-4">
                             <input class="form-control" type="tel" pattern="\([0-9]{2}\)[0-9]{4,5}-[0-9]{4}$" name="celular" value="<?php echo htmlentities($row_editarperfil['celular'], ENT_COMPAT, 'utf-8'); ?>" required>
-                          </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="col-sm-4 control-label">Imagem:</label>
-                            <div class="col-sm-6">
-                            <input class="form-control" type="file"  name="img" value="<?php echo htmlentities($row_editarperfil['img'], ENT_COMPAT, 'utf-8'); ?>" required>
                           </div>
                           </div>
                          <div class="form-group">
@@ -362,7 +367,11 @@ do {
         </div>
     </div>
 </main>
+<?php
+mysql_free_result($RSsolicitar);
+?>
 <footer>
+
 <!-- InstanceBeginEditable name="footer" -->
  <div class="footer"></div>
 

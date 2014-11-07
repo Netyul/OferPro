@@ -23,7 +23,7 @@ if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != ''){
 	elseif(isset($pagina) && isset($action) && $action =='perfil'){
 		require_once('paginas/usuario/perfil.php');
 	}
-	elseif(isset($pagina) && !isset($action) && $pagina == 'usuario'){
+	elseif(isset($pagina) && empty($action) && $pagina == 'usuario'){
 ?>
 <?php require_once('skin/section.phtml'); ?>
 <main>
@@ -53,32 +53,32 @@ if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != ''){
                         		<div class="col-xs-8">
                                 	<form class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">Nome:</label>
-                                            <div class="col-sm-5">
+                                            <label class="col-sm-5 control-label">Nome:</label>
+                                            <div class="col-sm-5" align="left">
                                             	<label class="control-label"><?php echo $userPerfil_row['nome']; ?></label>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">Email:</label>
-                                            <div class="col-sm-5">
+                                            <label class="col-sm-5 control-label">Email:</label>
+                                            <div class="col-sm-5" align="left">
                                             	<label class="control-label"><?php echo $userPerfil_row['email']; ?></label>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">Data de Nascimento:</label>
-                                            <div class="col-sm-5">
+                                            <label class="col-sm-5 control-label">Data de Nascimento:</label>
+                                            <div class="col-sm-5" align="left">
                                             	<label class="control-label"><?php echo $userPerfil_row['datanascimento']; ?></label>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">Celular:</label>
-                                            <div class="col-sm-5">
+                                            <label class="col-sm-5 control-label">Celular:</label>
+                                            <div class="col-sm-5" align="left">
                                             	<label class="control-label"><?php echo $userPerfil_row['celular']; ?></label>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">Sexo:</label>
-                                            <div class="col-sm-5">
+                                            <label class="col-sm-5 control-label">Sexo:</label>
+                                            <div class="col-sm-5" align="left">
                                             	<label class="control-label"><?php echo $userPerfil_row['sexo']; ?></label>
                                             </div>
                                         </div>

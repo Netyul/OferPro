@@ -92,9 +92,10 @@ section{
 	margin-top: 0px;
 	margin-bottom:0px;
 	padding-top:10px;
+	padding-left:15px;
 	padding-bottom:10px;	
 	font-size:20px;
-	text-align:center;
+	text-align:left;
 }
 
 .page-header {
@@ -111,6 +112,45 @@ mark{background-color:#0A6340; color:#fff;}
 }
 rodape-social{
 	
+	}
+.form-horizontal .control-label {
+	padding-top: 7px;
+	margin-bottom: 0;
+	text-align: left;
+}
+.principal{
+	margin-top: 0px;
+	border-radius: 5px 5px 0 0;
+	text-align:left
+}
+#fileinput{
+	width:100%;
+}
+top{
+	text-align:left;
+	padding-left:20px;
+}
+.align{
+	text-align:left;
+}
+#div-input-file{
+    background:;
+    height:28px;
+    max-width:385px;
+    margin:0px;
+}
+#file-original{
+	margin:0px;
+	padding:0px;
+    font-size:18px;
+	width:0px;
+	height: 0px;
+}
+.navbar-brand{
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:0px;
+	padding-right:0;
 	}
 /* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
 
@@ -147,12 +187,20 @@ rodape-social{
 .img-section{
 	margin-top: 15px;
 }
-
+.align{
+	text-align:left;
+}
+.navbar-brand{
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:15;
+	padding-right:0;
+	}
 }
 
 /* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
 
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 768px) {
 
 .form-oferapp-busca {
 	min-width: 400px;
@@ -165,6 +213,9 @@ rodape-social{
 	margin-left: auto;
 	
 }
+
+	
+
 .input-oferapp-busca {
 	min-width: 300px;
 	max-width: 600px;
@@ -206,6 +257,7 @@ margin: 80px auto;
 }
 .top h2{
 	text-align:left;
+	padding-left: 0px;
 }
 .img-section{
 	margin-top: 238px;
@@ -217,4 +269,22 @@ margin: 80px auto;
 .Slogan h1{
 	font-size:30px;
 }
+.form-horizontal .control-label {
+padding-top: 7px;
+margin-bottom: 0;
+text-align: right;
+}
+.principal{
+	text-align:center;
+}
+.align{
+	text-align: right;
+	float:right;
+}
+.navbar-brand{
+	padding-top:11px;
+	padding-bottom:11px;
+	padding-left:10px;
+	padding-right:3px;
+	}
 }

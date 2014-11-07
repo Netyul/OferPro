@@ -14,7 +14,7 @@ $totalRows = mysqli_num_rows($resultHome);
 <ul class="row">
 	<?php 
 	if($totalRows <=0){
-			echo '<div class="alert alert-warning" role="alert">Nenhum oferta cadastrado!</div>';
+			echo '<div class="alert alert-warning" role="alert">Nenhuma oferta cadastrada!</div>';
 		}
     while($homeRows = mysqli_fetch_array($resultHome)){
 		$Oferta = str_replace(" ","-", $homeRows['titulo']);

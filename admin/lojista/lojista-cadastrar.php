@@ -151,6 +151,8 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
 <meta name="author" content="Jefte Amorim da Costa">
 <meta name="generator" content="Netyul">
 <title>Administração da OferApp - Cadastro de logista</title>
+
+<link href="../skin/images/favicon.png" rel="icon" type="image/x-icon"/>
 <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="../css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
 <link href="../css/oferapp.css" rel="stylesheet" type="text/css">
@@ -183,22 +185,44 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="http://<?php echo BASEURL; ?>"><img  src="../images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
+                <a class="navbar-brand" href="http://<?php echo BASEURL; ?>/admin/lojista"><img  src="../images/logo.png" alt="OferApp Ofertas de Produtos e serviços mais proximo de você" title="OferApp Ofertas de Produtos e serviços mais proximo de você"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            	<ul class="nav navbar-nav">
+                    <li><a href="<?php echo BASEURL; ?>/admin/"><img src="../../skin/images/estatisticas.jpg" width="39"> Ofer Estatísticas (BR)</a></li>                    
+                  </ul>
                 <ul class="nav navbar-nav navbar-right">
                 	<?php 
 					$level = LEVEL;
 					if($level == 'superadmin'){
 					?>                 
-                    <li><a href="<?php echo BASEURL; ?>/admin/cidade">Cidades</a></li>
-                    <li><a href="<?php echo BASEURL; ?>/admin/administradores">Administradores</a></li>
-                    <?php } ?> 
-                    <li><a href="<?php echo BASEURL; ?>/admin/lojista">Lojistas</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/cidade" style="padding-top: 17px !important; padding-bottom: 16px !important;">Cidades</a></li>
+                    <li><a href="<?php echo BASEURL; ?>/admin/administradores" style="padding-top: 17px !important; padding-bottom: 16px !important;">Administradores</a></li>
+                    <?php }else{
+						$colname_admin = "-1";
+						if (isset($_SESSION['admin_id'])) {
+						  $colname_admin = $_SESSION['admin_id'];
+						}
+						mysql_select_db($database_dboferapp, $dboferapp);
+						$query_admin = sprintf("SELECT a.id, c.nome, e.sigla FROM admin AS a INNER JOIN cidade AS c ON a.cidade = c.id INNER JOIN estado AS e ON c.id_uf = e.id WHERE a.id = %s", GetSQLValueString($colname_admin, "int"));
+						$admin = mysql_query($query_admin, $dboferapp) or die(mysql_error());
+						$row_admin = mysql_fetch_assoc($admin); 
+						$Ecidade =  $row_admin['nome'].'-'.$row_admin['sigla'];
+						$LinkCidade = str_replace(" ","-", $row_admin['nome']);
+						$link = $LinkCidade.'-'.$row_admin['sigla'];
+					?>
+                    <li>
+                    	<div class="btn-group btn-group-cidade" role="menuitem" style="padding: 13px">
+            				<a class="btn btn-default">Cidade: <?php echo $Ecidade; ?></a>
+            
+            			</div>
+                    </li>
+                    <?php } ?>
+                    <li><a href="<?php echo BASEURL; ?>/admin/lojista" style="padding-top: 17px !important; padding-bottom: 16px !important;">Meus Lojistas</a></li>
                     
                     <li class="dropdown ">
-                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo ADMNOME; ?> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle cadastrar" data-toggle="dropdown" style="padding-top: 17px !important; padding-bottom: 16px !important;"><span class="glyphicon glyphicon-user"></span> <?php echo ADMNOME; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                            
                             <li><a href="<?php echo BASEURL; ?>/admin/logout">sair</a></li>
@@ -214,8 +238,8 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
     <div class="container">
         <div class="area principal">
             <div class="top row">
-            <div class="col-md-6">
-            	<h2>  <span class="glyphicon glyphicon-bookmark icon-destaque"></span>Administração Lojista</h2>
+            <div class="col-md-6" style="padding-left:0px">
+            	<h2 style="padding-left:0px"><span class="glyphicon glyphicon-bookmark icon-destaque"></span> Editar Lojista</h2>
             </div>
             <div class="col-md-6" align="right">
             	
@@ -224,21 +248,19 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
             <div class="row">
             	<div class="col-md-4">
                 	<div class="panel panel-default">
-                        <div class="panel-heading">Lista de clientes lojistas</div>
+                        <div class="panel-heading" align="left">Lista de clientes lojistas</div>
                         <?php if($level == 'admin'){ ?>
                         <div class="panel-body">
-                            <table class="table">
-                              <tbody>
+                            
                                   <?php if ($totalRows_adminLojista == 0) { // Show if recordset empty ?>
-                                  <tr>
-                                  <td colspan="4">Não a nenhum lojista cadastardo</td>
-                                  </tr>
+                                  <p align="left">Não há nenhum lojista cadastardo</p>
                                   <?php } // Show if recordset empty ?>
-								  
+								  <table class="table">
+                              		<tbody>
                                   <?php do { ?>
                                     <tr>
-                                      <td width="16%">&nbsp;</td>
-                                      <td width="60%"><a href="ofertas.php?id=<?php echo $row_adminLojista['id'];?>" title="Editar Lojista" class="editar"><?php echo $row_adminLojista['nomeEmpresa']; ?></a></td>
+                                      <td width="16%"><?php if($row_adminLojista['statos'] == 'on'){ echo '<a href="index.php?desativar='.$row_adminLojista['id'].'" class="btn btn-danger btn-xs" title="Desativar conta"><span class="glyphicon glyphicon-eye-close"></span></a>'; }else{ echo '<a href="index.php?ativar='.$row_adminLojista['id'].'" class="btn btn-dsuccess btn-xs" title="Ativar conta"><span class="glyphicon glyphicon-eye-open"></span></a>';} ?></td>
+                                      <td width="60%" align="left"><a href="ofertas.php?id=<?php echo $row_adminLojista['id'];?>" title="Editar Lojista" class="editar"><?php echo $row_adminLojista['nomeEmpresa']; ?></a></td>
                                       <td width="8%"><a href="lojista-editar.php?id=<?php echo $row_adminLojista['id'];?>" title="Editar Lojista" class="editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                       <td width="8%"><a href="lojista-excluir.php?id=<?php echo $row_adminLojista['id']; ?>" title="Excluir lojista" class="excluir"><span class="glyphicon glyphicon-remove"></span></a></td>
                                     </tr>
@@ -248,26 +270,26 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                         </div>
                         <div class="panel-footer">
                             <ul class="pagination">
-                                <li><a href="<?php printf("%s?pageNum_adminLojista=%d%s", $currentPage, 0, $queryString_adminLojista); ?>"><span class="glyphicon glyphicon-backward"></span></a></li>
+                               
                                 <li><a href="<?php printf("%s?pageNum_adminLojista=%d%s", $currentPage, max(0, $pageNum_adminLojista - 1), $queryString_adminLojista); ?>"><span class="glyphicon glyphicon-step-backward"></span></a></li>
                                 <li> <a><?php echo ($startRow_adminLojista + 1) ?> a <?php echo min($startRow_adminLojista + $maxRows_adminLojista, $totalRows_adminLojista) ?> de <?php echo $totalRows_adminLojista ?> </a> </li>
                                 <li><a href="<?php printf("%s?pageNum_adminLojista=%d%s", $currentPage, min($totalPages_adminLojista, $pageNum_adminLojista + 1), $queryString_adminLojista); ?>"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-                                <li><a href="<?php printf("%s?pageNum_adminLojista=%d%s", $currentPage, $totalPages_adminLojista, $queryString_adminLojista); ?>"><span class="glyphicon glyphicon-forward" ></span></a></li>
+                                
                             </ul>
                         </div>
                         <?php }else{ ?>
                         <div class="panel-body">
-                            <table class="table">
-                                <tbody>
                                   <?php if ($totalRows_RsLojistas == 0) { // Show if recordset empty ?>
-                                  <tr>
-                                  <td colspan="4">Não a nenhum lojista cadastardo</td>
-                                  </tr>
+                                  
+                                  <p align="left">Não há nenhum lojista cadastardo</p>
+                                  
                                   <?php } // Show if recordset empty ?>
+                                  <table class="table">
+                                <tbody>
 								  <?php do { ?>
                                     <tr>
-                                      <td width="16%">&nbsp;</td>
-                                      <td width="60%"><a href="ofertas.php?id=<?php echo $row_RsLojistas['id'];?>" title="Editar Lojista" class="editar"><?php echo $row_RsLojistas['nomeEmpresa']; ?></a></td>
+                                      <td width="16%"><?php if($row_adminLojista['statos'] == 'on'){ echo '<a href="index.php?desativar='.$row_adminLojista['id'].'" class="btn btn-danger btn-xs" title="Desativar conta"><span class="glyphicon glyphicon-eye-close"></span></a>'; }else{ echo '<a href="index.php?ativar='.$row_adminLojista['id'].'" class="btn btn-dsuccess btn-xs" title="Ativar conta"><span class="glyphicon glyphicon-eye-open"></span></a>';} ?></td>
+                                      <td width="60%" align="left"><a href="ofertas.php?id=<?php echo $row_RsLojistas['id'];?>" title="Editar Lojista" class="editar"><?php echo $row_RsLojistas['nomeEmpresa']; ?></a></td>
                                       <td width="8%"><a href="lojista-editar.php?id=<?php echo $row_RsLojistas['id'];?>" title="Editar Lojista" class="editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                       
                                       <td width="8%"><a href="lojista-excluir.php?id=<?php echo $row_RsLojistas['id']; ?>" title="Excluir lojista" class="excluir"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -279,11 +301,11 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                         </div>
                         <div class="panel-footer">
                             <ul class="pagination">
-                                <li><a href="<?php printf("%s?pageNum_RsLojistas=%d%s", $currentPage, 0, $queryString_RsLojistas); ?>"><span class="glyphicon glyphicon-backward"></span></a></li>
+                                
                                 <li><a href="<?php printf("%s?pageNum_RsLojistas=%d%s", $currentPage, max(0, $pageNum_RsLojistas - 1), $queryString_RsLojistas); ?>"><span class="glyphicon glyphicon-step-backward"></span></a></li>
                                 <li> <a><?php echo ($startRow_RsLojistas + 1) ?> a <?php echo min($startRow_RsLojistas + $maxRows_RsLojistas, $totalRows_RsLojistas) ?> de <?php echo $totalRows_RsLojistas ?></a> </li>
                                 <li><a href="<?php printf("%s?pageNum_RsLojistas=%d%s", $currentPage, min($totalPages_RsLojistas, $pageNum_RsLojistas + 1), $queryString_RsLojistas); ?>"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-                                <li><a href="<?php printf("%s?pageNum_RsLojistas=%d%s", $currentPage, $totalPages_RsLojistas, $queryString_RsLojistas); ?>"><span class="glyphicon glyphicon-forward" ></span></a></li>
+                                
                             </ul>
                         </div> 
                         <?php } ?>                       
@@ -291,11 +313,11 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
        			</div>
                 <div class="col-md-8">
                 	 <div class="panel panel-default">
-                            <div class="panel-heading">Cadastrar novo lojista</div>
+                            <div class="panel-heading" align="left">Cadastrar novo lojista</div>
                             <div class="panel-body">
                             	<form action="<?php echo $editFormAction; ?>" method="post" enctype="multipart/form-data" name="form1" class="form-horizontal" role="form">
                               		<div class="form-group">
-                              			<label for="nome-da-empresa" class="col-sm-4 control-label">Rasão Social:</label>
+                              			<label for="nome-da-empresa" class="col-sm-4 control-label">Razão Social:</label>
                                     	<div class="col-sm-8">
                                         	<input type="text" name="nomeempresa" value="<?php if(isset($nomeEmp)){ echo $nomeEmp;} ?>" class="form-control" required>
                                  		</div>
@@ -325,7 +347,7 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                                         </div>
                                     </div>
                                   	<div class="form-group">
-                                  		<label class="col-sm-3 control-label">Endereco:</label>
+                                  		<label class="col-sm-3 control-label">Endereço:</label>
                                         <div class="col-sm-9">
                                         	<input type="text" name="endereco" value="<?php if(isset($endereco)){ echo $endereco;} ?>"class="form-control" required>
                                         </div>
@@ -396,8 +418,9 @@ $queryString_adminLojista = sprintf("&totalRows_adminLojista=%d%s", $totalRows_a
                                      </div>
                                      <div class="form-group">
                                     	<label class="col-sm-3 control-label">Imagem:</label>
-                                       <div class="col-sm-3">
-                                        	<input type="file" name="img" value="<?php if(isset($$imageTemp)){ echo $$imageTemp;} ?>" size="35" required>
+                                       <div class="col-sm-9" align="left">
+                                        	<input type="file" name="img" id="file-original" value="<?php if(isset($$imageTemp)){ echo $$imageTemp;} ?>" size="35" required>
+                                			<button type="button" class="btn btn-Oferapp" onclick="this.form.img.click()"><span class="glyphicon glyphicon-picture"></span> Procurar...</button> 
                                         </div>
                                      </div>
                                   <div class="form-group">

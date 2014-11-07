@@ -7,28 +7,26 @@
  */
 //capturar cidade no banco de dados.
 $cidade = explode("-", $catCidade);
-$selectCidede = "SELECT * FROM cidade WHERE nome = '".$cidade[0]."'";
-$resultCidade = mysqli_query($dboferapp, $selectCidede);
-$cidadeRow = mysqli_fetch_array($resultCidade);
-//caputurar lojista por cidade no banco de dados
-$lojistaCidade = "SELECT * FROM lojista WHERE cidade = ".$cidadeRow['id'];
-$resultLojistaCidade = mysqli_query($dboferapp, $lojistaCidade);
+
  ?>
 <ul class="row">
 	<?php
-    while($lojistaCidadeRows = mysqli_fetch_array($resultLojistaCidade)){
 		
-		$frontCidade_query = "SELECT * FROM ofertas WHERE id_lojista = ".$lojistaCidadeRows['id']." ORDER BY id DESC";
+		$frontCidade_query = "SELECT o.id, o.titulo, o.img, o.descricao, l.nomeFantasia, c.nome AS nomeCidade FROM cidade AS c INNER JOIN lojista AS l ON c.id = l.cidade INNER JOIN ofertas AS o ON l.id = o.id_lojista WHERE c.nome = '".$cidade[0]."' ORDER BY id DESC";
 		$frontCidade = mysqli_query($dboferapp, $frontCidade_query);
 		$totalRows = mysqli_num_rows($frontCidade);
-		if($totalRows <=0){
-			echo '<div class="alert alert-warning" role="alert">Nenhum oferta cadastrado para essa cidade!</div>';
+		
+		if($totalRows <= 0){
+			echo '<div class="alert alert-warning" role="alert">Nenhuma oferta cadastrado para essa cidade!</div>';
+			
 		}
 		while($frontCidadeRows = mysqli_fetch_array($frontCidade)){
 			$Oferta = str_replace(" ","-", $frontCidadeRows['titulo']);
-			$lojista = str_replace(" ","-", $lojistaCidadeRows['nomeFantasia']);
+			$lojista = str_replace(" ","-", $frontCidadeRows['nomeFantasia']);
 			$linkOferta = $lojista.'/ofertas/'.$Oferta;
+			
     ?>
+   
     <li class="col-md-3 ">
         <div class="well well-sm">
             <div class="thumbnail destaque-images">
@@ -41,5 +39,5 @@ $resultLojistaCidade = mysqli_query($dboferapp, $lojistaCidade);
             </div>
         </div>
     </li>
-    <?php }}?>
+    <?php }?>
 </ul>
